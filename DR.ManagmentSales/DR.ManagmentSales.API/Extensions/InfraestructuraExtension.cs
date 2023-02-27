@@ -5,20 +5,15 @@ using DR.ManagmentSales.Infrastructure.Repositories;
 using DR.ManagmentSales.Infrastructure.UOW;
 using Microsoft.EntityFrameworkCore;
 
-namespace DR.ManagmentSales.API.Extensions;
+namespace DR.ManagmentSales.API.Extensions
+{ 
     public  static class InfraestructureExtension
     {
 
         public static void RegisterInfraestructure(this IServiceCollection services) {
 
 
-            services.AddDbContext<DbContext, ManagmentSalesContext>(options =>
-            options
-               
-                .UseInMemoryDatabase(databaseName: "Exchange")
-                .EnableSensitiveDataLogging(false)
-
-            );
+            services.AddDbContext<ManagmentSalesContext>();
 
             services.AddScoped<IManagmentSalesUOW, ManagmentSalesUOW>();
 
