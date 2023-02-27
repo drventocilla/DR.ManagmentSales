@@ -69,24 +69,7 @@ namespace DR.ManagmentSales.API.Extensions
                     ValidateLifetime = true
                 };
 
-                //usado para el SignalR: para que pueda recibir desde la ruta y no el body
-                x.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = context => {
-                        if (context.Request.Path.Value.Contains("api/notificacionhub"))
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-
-                            // If the request is for our hub...
-                            var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/api/notificacionhub")))
-                            {
-                                context.Token = accessToken;
-                            }
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
+               
             });
         }
     }
