@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DR.ManagmentSales.Domain\DR.ManagmentSales.Domain.csproj" />
+    <ProjectReference Include="..\DR.ManagmentSales.Infrastructure\DR.ManagmentSales.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Core">
+      <HintPath>..\Librerias\Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
