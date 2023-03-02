@@ -27,7 +27,10 @@ namespace DR.ManagmentSales.Domain
           
         }
 
-        
+        public Producto()
+        {
+
+        }
 
     }
 }

@@ -35,17 +35,31 @@ namespace DR.ManagmentSales.Infrastructure.Repositories
 
         public Venta Find(Expression<Func<Venta, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return Query(filter).FirstOrDefault();
         }
 
         public IQueryable<Venta> Query(Expression<Func<Venta, bool>> filter = null, Func<IQueryable<Venta>, IOrderedQueryable<Venta>> orderBy = null, bool asNoTracking = true)
         {
-            throw new NotImplementedException();
+            IQueryable<Venta> query = asNoTracking ? this._dbset.AsNoTracking() : this._dbset;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (orderBy != null)
+            {
+
+                query = orderBy(query);
+            }
+            query = query.Include(venta => venta.Asesor).Include( venta => venta.Detalles);
+
+            return query;
         }
 
         public IEnumerable<Venta> Get(Expression<Func<Venta, bool>> filter = null, Func<IQueryable<Venta>, IOrderedQueryable<Venta>> orderBy = null)
         {
-            throw new NotImplementedException();
+            return Query(filter, orderBy).ToList();
         }
     }
 }

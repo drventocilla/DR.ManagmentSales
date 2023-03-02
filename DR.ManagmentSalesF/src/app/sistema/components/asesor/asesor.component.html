@@ -1,1 +1,51 @@
-<p>asesor works!</p>
+<ngx-spinner [name]="'asesor'"></ngx-spinner>
+<div class="container">
+    <app-sistema-header [title]="'ASESOR'" (closeDialog)="closeWindow($event)"></app-sistema-header>
+    <form [formGroup]="formulario" autocomplete="off">
+        <div class="row my-2 px-2">
+
+            <div class="col-12 p-1">
+                <mat-form-field appearance="outline" class="block small">
+                    <mat-label>Nombres</mat-label>
+                    <input matInput formControlName="nombres" placeholder="Nombre" maxLength="50" type="text" class="block small" onClick="this.setSelectionRange(0, this.value.length)">
+                </mat-form-field>
+                <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)">
+                    <div class="error-message" *ngIf="nombres.errors.required">
+                        Es requerido.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 p-1">
+                <mat-form-field appearance="outline" class="block small">
+                    <mat-label>Celular</mat-label>
+                    <input matInput formControlName="celular" placeholder="Celular" maxLength="20" type="text" class="block small" onClick="this.setSelectionRange(0, this.value.length)">
+                </mat-form-field>
+                <div *ngIf="celular.invalid && (celular.dirty || celular.touched)">
+                    <div class="error-message" *ngIf="celular.errors.required">
+                        Es requerido o tiene contiene número no válido.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 p-1">
+                <mat-form-field appearance="outline" class="block small">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" pattern="[^ @]*@[^ @]*" placeholder="Email" type="text" class="block small" onClick="this.setSelectionRange(0, this.value.length)">
+                </mat-form-field>
+                <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div class="error-message" *ngIf="email.errors.required">
+                        Es requerido o tiene contiene número no válido.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-12 p-1 d-flex justify-content-center">
+                <button mat-raised-button color="primary" matTooltip="Guardar" (click)="save()">
+                        <mat-icon>save</mat-icon>
+                        <span class="small">&nbsp; Guardar Cambios</span>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -5,6 +5,7 @@ import { PanelPrincipalComponent } from './components/panel-principal/panel-prin
 import { AsesorComponent } from './components/asesor/asesor.component';
 import { ProductoComponent } from './components/producto/producto.component';
 import { ReporteVentaComponent } from './components/reporte-venta/reporte-venta.component';
+import { ListaProductoComponent } from './components/lista-producto/lista-producto.component';
 
 const routes: Routes = [
 
@@ -16,7 +17,7 @@ const routes: Routes = [
 
           {
             path: '' ,
-            redirectTo: 'panel',
+            redirectTo: 'reporte-venta',
             pathMatch: 'full',
 
           }, 
@@ -29,8 +30,8 @@ const routes: Routes = [
             component: AsesorComponent,
           },
           {
-            path: 'producto' ,
-            component: ProductoComponent,
+            path: 'productos' ,
+            component: ListaProductoComponent,
           },
           {
             path: 'reporte-venta' ,

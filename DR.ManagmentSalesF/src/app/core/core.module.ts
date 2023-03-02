@@ -1,8 +1,5 @@
 
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { ExpiracionTokenInterceptor } from './interceptors/expiracion-token.interceptor';
-import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
 
@@ -16,21 +13,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
        
   ],
 
-  providers : [
-    
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true,
-  },
+  
 
-  {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ExpiracionTokenInterceptor,
-      multi: true,
-  },
-
-  ]
     
 })
 export class CoreModule {

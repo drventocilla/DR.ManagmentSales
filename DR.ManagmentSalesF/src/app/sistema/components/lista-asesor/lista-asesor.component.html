@@ -1,1 +1,101 @@
-<p>lista-asesor works!</p>
+<ngx-spinner [name]="'lista-asesores'"></ngx-spinner>
+<div class="row mt-4">
+    <div class="col-12">
+        <button class="mx-1" mat-raised-button color="primary" matTooltip="Registrar" (click)="openDetail()">
+                <mat-icon>edit</mat-icon>
+                <span class="small">&nbsp; Registrar</span>
+        </button>
+        <button class="mx-1" mat-raised-button color="primary" matTooltip="Actualizar" (click)="getAll()">
+                <mat-icon>refresh</mat-icon>
+                <span class="small">&nbsp; Actualizar</span>
+        </button>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col-12 justify-content-center">
+        <dx-data-grid id="reporte" [dataSource]="listaDeAsesores" [allowColumnReordering]="true" [columnAutoWidth]="true" [allowColumnResizing]="true" columnResizingMode="widget" [hoverStateEnabled]="true" [showBorders]="true" [height]="'80vh'" noDataText='Sin datos disponibles'
+            (onRowDblClick)="openDetail($event.data.codigo)" (onCellPrepared)="colorCelda($event, $event.data)">
+
+            <dxo-sorting mode="multiple"></dxo-sorting>
+
+
+            <div *dxTemplate="let cellInfo of 'cellTemplateDetalle'" class="text-center px-1">
+                <div class="row mx-1">
+                    <ng-container>
+                        <div class="col-2 col-md-1 justify-content-center d-flex">
+                            <button mat-icon-button color="primary" class="text-celeste my-auto" (click)="openDetail(cellInfo.data.id)">
+                                <mat-icon class="icon-extra-small align-middle pb-2">
+                                    edit
+                                </mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-2 col-md-1 justify-content-center d-flex">
+                            <button mat-icon-button color="warn" class="text-celeste my-auto" (click)="deleteItem(cellInfo.data.id)">
+                                <mat-icon class="icon-extra-small align-middle pb-2">
+                                    delete
+                                </mat-icon>
+                            </button>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+
+            <dxi-column dataField="id" alt="Código" dataType='string' [width]="100" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Código'>
+            </dxi-column>
+            <dxi-column dataField="nombres" alt="nombre" dataType='string' [width]="400" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Nombre'>
+            </dxi-column>
+            <dxi-column dataField="celular" alt="celular" dataType='string' [width]="100" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Celular'>
+            </dxi-column>
+            <dxi-column dataField="email" alt="email" dataType='string' [width]="100" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Email'>
+            </dxi-column>
+            <dxi-column class="" dataField="" [width]="100" cellTemplate="cellTemplateDetalle" [allowExporting]='false'>
+
+            </dxi-column>
+
+
+
+            <!-- #region dxo-selection:Esta etiqueta permite agregar una columna de seleccion por cada fila -->
+            <!-- <dxo-selection mode="multiple" selectAllMode="allPages">
+        </dxo-selection> -->
+            <!-- #endregion-->
+
+            <!-- #region column-chooser:Habilita cuadro selector de columnas -->
+            <!-- <dxo-column-chooser [enabled]="true" mode="select" title="Selector de Columnas">
+        </dxo-column-chooser> -->
+            <!-- #endregion-->
+
+            <!-- #region dxo-filter-row:Habilita la columna de filtro -->
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-group-panel [visible]="true" emptyPanelText="Arrastre aqui una columna"></dxo-group-panel>
+            <dxo-grouping #expand [autoExpandAll]="true"></dxo-grouping>
+            <dxo-filter-panel [visible]="false"></dxo-filter-panel>
+            <!-- #endregion-->
+
+            <!-- #region dxo-export:Habilita exportación -->
+            <!-- 
+        (onExporting)="onExporting($event)">
+        <dxo-export [enabled]="false"></dxo-export> -->
+
+            <!-- #endregion-->
+            <!-- #region dxo-search-panel: Habilita filtro defecto devexpress-->
+            <dxo-search-panel [visible]="false" [highlightCaseSensitive]="true" [highlightSearchText]="true" placeholder="Búsqueda">
+            </dxo-search-panel>
+            <!--  #endregion -->
+            <!-- #region Seccion de paginacion 
+        [pageSize]: Cantidad registros mostrados por pagina
+        [enabled]: Habilita el paginado (Por defecto esta : true)
+        -->
+            <dxo-paging [enabled]="true" [pageSize]="50"></dxo-paging>
+
+            <!-- #endregion -->
+
+            <!-- #region ReportStorage -->
+            <dxo-state-storing [enabled]="false" type="localStorage" storageKey="lista-producto"></dxo-state-storing>
+            <!-- #endregion ReportStorage -->
+
+        </dx-data-grid>
+
+    </div>
+</div>

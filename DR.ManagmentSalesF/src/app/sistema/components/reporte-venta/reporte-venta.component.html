@@ -1,1 +1,95 @@
-<p>reporte-venta works!</p>
+<ngx-spinner [name]="'report-venta'"></ngx-spinner>
+<div class="row my-3">
+
+    <div class="col-12 col-md-6 justify-content-center px-1">
+        <div class="px-3 py-3">
+            <span class="titulo-cabecera">RANKING</span>
+        </div>
+        <dx-pie-chart id="pie" palette="bright" [dataSource]="grupos">
+            <dxo-legend horizontalAlignment="center" verticalAlignment="bottom"></dxo-legend>
+            <dxo-export [enabled]="true"></dxo-export>
+            <dxi-series argumentField="nombre" valueField="total">
+                <dxo-label [visible]="true" format="fixedPoint">
+                    <dxo-connector [visible]="true" [width]="0.5"></dxo-connector>
+                </dxo-label>
+                <dxo-small-values-grouping mode="smallValueThreshold" [threshold]="this.valorMinimoDeOtros"></dxo-small-values-grouping>
+            </dxi-series>
+        </dx-pie-chart>
+    </div>
+
+    <div class="col-12 col-md-6  justify-content-center px-1">
+        <div class="px-3 py-3">
+            <span class="titulo-cabecera">DETALLA DE VENTAS REALIZADAS</span>
+        </div>
+
+        <dx-data-grid id="reporte" [dataSource]="detalles" [allowColumnReordering]="true" [columnAutoWidth]="true" [allowColumnResizing]="true" columnResizingMode="widget" [hoverStateEnabled]="true" [showBorders]="true" [height]="'80vh'" noDataText='Sin datos disponibles'>
+
+            <dxo-sorting mode="multiple"></dxo-sorting>
+
+            <dxi-column dataField="tipoDeDocumento" alt="tipoDeDocumento" dataType='string' [width]="250" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Documento'>
+            </dxi-column>
+
+            <dxi-column dataField="serie" alt="serie" dataType='string' [width]="100" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Serie'>
+            </dxi-column>
+
+            <dxi-column dataField="numero" alt="numero" dataType='string' [width]="70" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Número'>
+            </dxi-column>
+
+            <dxi-column dataField="asesor.nombres" alt="asesor" dataType='string' [width]="100" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Asesor'>
+            </dxi-column>
+
+            <dxi-column dataField="total" alt="total" dataType='number' format="#,###.00" [width]="100" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Total'>
+            </dxi-column>
+
+            <dxi-column dataField="fechaCreacion" alt="fechaCreacion" dataType='date' format='dd-MM-yyyy' [width]="100" [allowResizing]="true" [visible]="true" [allowExporting]="true" caption='Fecha Creación'>
+            </dxi-column>
+
+
+
+
+            <!-- #region dxo-selection:Esta etiqueta permite agregar una columna de seleccion por cada fila -->
+            <!-- <dxo-selection mode="multiple" selectAllMode="allPages">
+        </dxo-selection> -->
+            <!-- #endregion-->
+
+            <!-- #region column-chooser:Habilita cuadro selector de columnas -->
+            <!-- <dxo-column-chooser [enabled]="true" mode="select" title="Selector de Columnas">
+        </dxo-column-chooser> -->
+            <!-- #endregion-->
+
+            <!-- #region dxo-filter-row:Habilita la columna de filtro -->
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-group-panel [visible]="true" emptyPanelText="Arrastre aqui una columna"></dxo-group-panel>
+            <dxo-grouping #expand [autoExpandAll]="true"></dxo-grouping>
+            <dxo-filter-panel [visible]="false"></dxo-filter-panel>
+            <!-- #endregion-->
+
+            <!-- #region dxo-export:Habilita exportación -->
+            <!-- 
+        (onExporting)="onExporting($event)">
+        <dxo-export [enabled]="false"></dxo-export> -->
+
+            <!-- #endregion-->
+            <!-- #region dxo-search-panel: Habilita filtro defecto devexpress-->
+            <dxo-search-panel [visible]="false" [highlightCaseSensitive]="true" [highlightSearchText]="true" placeholder="Búsqueda">
+            </dxo-search-panel>
+            <!--  #endregion -->
+            <!-- #region Seccion de paginacion 
+        [pageSize]: Cantidad registros mostrados por pagina
+        [enabled]: Habilita el paginado (Por defecto esta : true)
+        -->
+            <dxo-paging [enabled]="true" [pageSize]="50"></dxo-paging>
+
+            <!-- #endregion -->
+
+            <!-- #region ReportStorage -->
+            <dxo-state-storing [enabled]="false" type="localStorage" storageKey="reporte-venta"></dxo-state-storing>
+            <!-- #endregion ReportStorage -->
+
+        </dx-data-grid>
+
+    </div>
+
+
+</div>

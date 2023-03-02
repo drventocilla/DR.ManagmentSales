@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { InteceptorsModule } from './core/interceptors/interceptors.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    CoreModule
+    CoreModule,
+    InteceptorsModule
   ],
   providers: [{
     provide: LOCALE_ID,
@@ -30,3 +32,4 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+2

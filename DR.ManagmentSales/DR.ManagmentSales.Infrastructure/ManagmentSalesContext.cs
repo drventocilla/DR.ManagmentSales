@@ -46,22 +46,23 @@ namespace DR.ManagmentSales.Infrastructure
 
             Venta venta1 = new Venta("1", "FACTURA ELECTRONICA", "F001", '1', new DateTime(2022, 10, 1), asesor1.Id);
             Venta venta2 = new Venta("2", "FACTURA ELECTRONICA", "F001", '2', new DateTime(2022, 10, 2), asesor2.Id);
-            Venta venta3 = new Venta("5", "BOLETA ELECTRONICA", "B001", '1', new DateTime(2022, 10, 3), asesor2.Id);
+            Venta venta3 = new Venta("3", "BOLETA ELECTRONICA", "B001", '1', new DateTime(2022, 10, 3), asesor2.Id);
 
             DetalleDeVenta detalleDeVenta1 = new DetalleDeVenta("1", productoN1.Id, productoN1.Nombre, 1500, 10, venta1.Id);
             DetalleDeVenta detalleDeVenta2 = new DetalleDeVenta("2", productoN2.Id, productoN2.Nombre, 250, 10, venta1.Id);
             DetalleDeVenta detalleDeVenta3 = new DetalleDeVenta("3", productoN3.Id, productoN3.Nombre, 350, 10, venta1.Id);
             DetalleDeVenta detalleDeVenta4 = new DetalleDeVenta("4", productoN4.Id, productoN4.Nombre, 200, 10, venta1.Id);
             DetalleDeVenta detalleDeVenta5 = new DetalleDeVenta("5", productoN5.Id, productoN5.Nombre, 400, 10, venta1.Id);
-            DetalleDeVenta detalleDeVenta6 = new DetalleDeVenta("6", productoN2.Id, productoN2.Nombre, 250, 10 , venta2.Id);
+            DetalleDeVenta detalleDeVenta6 = new DetalleDeVenta("6", productoN2.Id, productoN2.Nombre, 250, 10, venta2.Id);
             DetalleDeVenta detalleDeVenta7 = new DetalleDeVenta("7", productoN3.Id, productoN3.Nombre, 350, 10, venta2.Id);
             DetalleDeVenta detalleDeVenta8 = new DetalleDeVenta("8", productoN4.Id, productoN4.Nombre, 200, 10, venta3.Id);
             DetalleDeVenta detalleDeVenta9 = new DetalleDeVenta("9", productoN4.Id, productoN4.Nombre, 200, 10, venta3.Id);
          
             modelBuilder.Entity<Asesor>().HasOne<Usuario>().WithMany().HasForeignKey(s => s.UsuarioId);
-            modelBuilder.Entity<Venta>().HasOne<Asesor>().WithMany().HasForeignKey(s => s.AsesorId);
+            modelBuilder.Entity<Venta>().HasOne<Asesor>(v => v.Asesor).WithMany().HasForeignKey(s => s.AsesorId);
             modelBuilder.Entity<DetalleDeVenta>().HasOne<Producto>().WithMany().HasForeignKey(s => s.ProductoId);
             modelBuilder.Entity<DetalleDeVenta>().HasOne(dv=> dv.Venta).WithMany().HasForeignKey(s => s.VentaId);
+            modelBuilder.Entity<Venta>().HasMany(dv => dv.Detalles);
 
 
             modelBuilder.Entity<Usuario>().HasData(admin, gerente, uasesor1, uasesor2);

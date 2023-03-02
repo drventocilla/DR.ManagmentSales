@@ -33,12 +33,12 @@ namespace DR.ManagmentSales.Infrastructure.Repositories
 
             if (filter != null)
             {
-                query.Where(filter);
+                query = query.Where(filter);
             }
 
             if (orderBy != null) {
 
-                return orderBy(query);
+                query= orderBy(query);
             }
 
             return query;
@@ -47,11 +47,12 @@ namespace DR.ManagmentSales.Infrastructure.Repositories
       
         public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
         {
-            return _dbset.ToList();
+            return Query(filter, orderBy).ToList();
         }
 
         public void Update(T entidad)
         {
+            _dbset.Attach(entidad);
             _dbset.Update(entidad);
         }
 

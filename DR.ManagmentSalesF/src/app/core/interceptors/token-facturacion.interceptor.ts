@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpInterceptor, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../services/local-storage.service';
+
 import { AuthService } from '../services/auth.service';
 import { environment } from 'src/environments/environment';
 
@@ -13,7 +14,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(
     private localstorageService: LocalStorageService,
     private authService: AuthService,
-
+   
   ) {
     // console.log("llego al interceptor");
   }
@@ -21,17 +22,17 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const request = this.addHeadersCambioFacil(req);
+    const request = this.addHeaders(req);
 
     return next.handle(request);
   }
 
-  addHeadersCambioFacil = (req: HttpRequest<any>): HttpRequest<any> => {
+  addHeaders = (req: HttpRequest<any>): HttpRequest<any> => {
 
     if (req.url.toString().includes(environment.urlAddress)) {
 
       // console.log("CON HEADER");
-      let headers = [];
+      let headers :any[]= [];
 
       // Leer token del localstorage
       let tokenLocalStorage = this.localstorageService.get(this.authService.obtenerKeyToken());
@@ -54,8 +55,6 @@ export class TokenInterceptor implements HttpInterceptor {
       /* console.log('Sin header a un externo api req',req); */
       return req;
     }
-
-
   }
 
   private setHeader = (req: HttpRequest<any>, header: { name: string, value: string }): HttpRequest<any> => {

@@ -18,7 +18,7 @@ namespace DR.ManagmentSales.API.Helpers
             }
             if (tipoDeMensaje == State.ErrorValidation)
             {
-                return 401;
+                return 400;
             }
             if (tipoDeMensaje == State.ErrorNotFound)
             {

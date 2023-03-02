@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DR.ManagmentSales.Domain
@@ -17,9 +18,20 @@ namespace DR.ManagmentSales.Domain
         public string Serie { get; private set; }
         public int Numero { get; private set; }
         public string AsesorId { get; private set; }
+        public Asesor Asesor { get; set; }
+        [JsonIgnore]
         public List<DetalleDeVenta> Detalles { get; private set; }
         public Estado EstadoActual { get; private set;  }
-        public double Total { get; private set; }
+        public double Total { get {
+
+
+                 double total = 600;
+                 this.Detalles.ForEach(x => { total += x.PrecioTotal; });
+                 return total;
+                
+            
+            }}
+
         public DateTime FechaCreacion { get; set; }
 
         public Venta(string id , 
@@ -38,6 +50,8 @@ namespace DR.ManagmentSales.Domain
             EstadoActual = Estado.Valido;
             FechaCreacion = fechaCreacion;
             AsesorId = asesorId;
+            
+            
 
 
 
@@ -51,18 +65,11 @@ namespace DR.ManagmentSales.Domain
             
             
             Detalles.Add(detalleDeVenta);
-            CalculateTotal();
+            
 
 
         }
 
-        private void CalculateTotal() {
-
-            this.Total = 0;
-            this.Detalles.ForEach(x => { Total += x.PrecioTotal; }); 
-
-
-        }
     }
   
 
