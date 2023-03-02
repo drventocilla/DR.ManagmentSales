@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DR.ManagmentSales.Domain
@@ -16,6 +17,7 @@ namespace DR.ManagmentSales.Domain
         public string Nombres { get; private set; }
         public string Celular { get; private set; }
         public string Email { get; private set; }
+        [JsonIgnore]
         public string UsuarioId { get; private set; }
         
 
@@ -26,6 +28,12 @@ namespace DR.ManagmentSales.Domain
             Celular = celular;
             Email = email;
           
+        }
+        public Asesor(string id)
+        {
+            Id = id;
+          
+
         }
 
         public Asesor()

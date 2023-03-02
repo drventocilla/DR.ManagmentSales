@@ -21,7 +21,7 @@ export class SharedModalService {
   mostrarMessageModal(message: Message, operacionExitosa: boolean,  titulo?: string  ) {
     return this.dialog.open(MessageModalV2Component, {
       disableClose: false,
-      panelClass: 'ccont-message-dialog',
+      panelClass: 'message-dialog',
       data: {
         mensaje: message,
         estado: operacionExitosa,
@@ -34,7 +34,7 @@ export class SharedModalService {
 
     return this.dialog.open(DecisionModalComponent, {
       disableClose: true,
-      panelClass: 'ccont-message-dialog',
+      panelClass: 'message-dialog',
       maxHeight: '10%',
       data: {
         mensaje: `${message}`,

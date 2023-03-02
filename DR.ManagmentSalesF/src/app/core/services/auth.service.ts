@@ -69,16 +69,15 @@ export class AuthService {
     
     this.localStorageService.set(this.KEYTOKEN, tokenAux);
     this.usuarioSubject$.next(this._usuarioActual);
-
-    //TODO: MUY IMPORTANTE: Evaluar como se usara la expiracion del token y a donde llevara este (no deberia de llevar al login para evitar problemas de bucle infirnito con el cliente guard)
-    //?...continuacion: se deberia crear una pagina adicional???
+   
     if (tokenAux == null || tokenAux == "") {
+
       this.estaLogeado$.next(false);
     
     }
     else {
 
-        this.estaLogeado$.next(true);
+      this.estaLogeado$.next(true);
     }
   }
 
@@ -131,9 +130,11 @@ export class AuthService {
   }
 
   public logout() {
+
     this.localStorageService.clear();
     this.getUserLS();
     location.reload();
+
   }
 
 }

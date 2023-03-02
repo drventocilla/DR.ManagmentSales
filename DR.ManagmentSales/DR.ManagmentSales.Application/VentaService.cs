@@ -48,7 +48,7 @@ namespace DR.ManagmentSales.Application
 
         public Task<StateExecution<IEnumerable<Venta>>> ReportAsync(DateTime FechaInicial , DateTime FechaFinal ,  CancellationToken cancellationToken)
         {
-            IEnumerable<Venta> ListaEntidad = this._managmentSalesUOW._ventaRepository.Get(x=>x.FechaCreacion >= FechaInicial && x.FechaCreacion <= FechaFinal);
+            IEnumerable<Venta> ListaEntidad = this._managmentSalesUOW._ventaRepository.Get(x=>(x.FechaCreacion >= FechaInicial && x.FechaCreacion <= FechaFinal));
 
             return Task.FromResult(new StateExecution<IEnumerable<Venta>>()
             {

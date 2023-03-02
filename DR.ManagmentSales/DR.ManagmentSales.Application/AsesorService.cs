@@ -1,26 +1,37 @@
 ﻿using Core;
 using Core.GestionDeExcepciones;
+using Core.Services;
 using DR.ManagmentSales.Domain;
 using DR.ManagmentSales.Infrastructure.Interface;
 
 namespace DR.ManagmentSales.Application
 {
-    public class AsesorService 
+    public class AsesorService  : IServicio<Asesor>
     {
         private IManagmentSalesUOW _managmentSalesUOW;
         public AsesorService(IManagmentSalesUOW managmentSalesUOW)
         {
             _managmentSalesUOW = managmentSalesUOW;
         }
-        public async Task<StateExecution> UpdateAsync(Asesor entidad, CancellationToken cancellationToken)
+        public async Task<StateExecution> UpsertAsync(Asesor entidad, CancellationToken cancellationToken)
         {
-            this._managmentSalesUOW._asesorRepository.Update(entidad);
+
+            Asesor asesorEncontrado = this._managmentSalesUOW._asesorRepository.Find(x => x.Id == entidad.Id);
+
+            if (asesorEncontrado == null)
+            {
+                this._managmentSalesUOW._asesorRepository.Add(entidad);
+            }
+            else
+            {
+                this._managmentSalesUOW._asesorRepository.Update(entidad);
+            }
+
+            
             await this._managmentSalesUOW.SaveChangesAsync(cancellationToken);
 
             return (new StateExecution()
             {
-
-
                 Status = true,
                 StateType = State.Ok,
                 MessageState = new Message() { Description = "Registro modificado con éxito." },
@@ -78,7 +89,7 @@ namespace DR.ManagmentSales.Application
             };
         }
 
-        public  Task<StateExecution<Asesor>> Find(string id, CancellationToken cancellationToken)
+        public  Task<StateExecution<Asesor>> FindAsync(string id, CancellationToken cancellationToken)
         {
             Asesor entidad = this._managmentSalesUOW._asesorRepository.Find(x => x.Id == id);
 

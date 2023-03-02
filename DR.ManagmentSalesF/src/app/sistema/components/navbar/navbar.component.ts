@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SubSink } from 'subsink';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserFront } from '../../../core/models/user-front.model';
+import { TituloCabeceraService } from 'src/app/core/services/titulo.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,13 +16,20 @@ export class NavbarComponent implements OnInit   {
   sub : SubSink = new SubSink();
   usuarioActuAl: UserFront;
 
-  constructor( private authService: AuthService ) {
+  constructor( private authService: AuthService ,
+               private cdRef: ChangeDetectorRef,
+               private tituloCabeceraService: TituloCabeceraService ) {
 
     
 
 
 
     
+  }
+  
+  ngAfterViewChecked(): void {
+    this.titulo$ = this.tituloCabeceraService.tituloChanged$;
+    this.cdRef.detectChanges();
   }
   ngOnInit(): void {
     
@@ -43,7 +51,7 @@ export class NavbarComponent implements OnInit   {
 
   logOut(){
 
-   
+   this.authService.logout();
   }
 
 

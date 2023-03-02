@@ -1,1 +1,46 @@
-<p>producto works!</p>
+<ngx-spinner [name]="'producto'"></ngx-spinner>
+<div class="container">
+    <app-sistema-header [title]="'PRODUCTO'" (closeDialog)="closeWindow($event)"></app-sistema-header>
+    <form [formGroup]="formulario" autocomplete="off">
+        <div class="row my-2 px-2">
+
+            <div class="col-12 p-1">
+                <mat-form-field appearance="outline" class="block small">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombre" placeholder="Nombre" [maxLength]="50" type="text" class="block small" onClick="this.setSelectionRange(0, this.value.length)">
+                </mat-form-field>
+                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                    <div class="error-message" *ngIf="nombre.errors.required">
+                        Es requerido.
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 p-1">
+                <mat-form-field appearance="outline" class="block small">
+                    <mat-label>Precio</mat-label>
+                    <input matInput formControlName="precio" placeholder="Precio" max="10000" min="0.1" type="number" class="block small" onClick="this.setSelectionRange(0, this.value.length)">
+                </mat-form-field>
+                <div *ngIf="precio.invalid && (precio.dirty || precio.touched)">
+                    <div class="error-message" *ngIf="precio.errors.required">
+                        Es requerido o tiene contiene número no válido.
+                    </div>
+                    <div class="error-message" *ngIf="precio.errors.max">
+                        El precio debe ser como máximo 10000
+                    </div>
+                    <div class="error-message" *ngIf="precio.errors.min">
+                        El precio debe ser como mínimo 0.1
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row my-2">
+            <div class="col-12 p-1 d-flex justify-content-center">
+                <button mat-raised-button color="primary" matTooltip="Guardar" (click)="save()">
+                        <mat-icon>save</mat-icon>
+                        <span class="small">&nbsp; Guardar Cambios</span>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -6,9 +6,11 @@ import { AngularMaterialModule } from "./modules/angular-material.module";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { DecisionModalComponent } from "./components/modales/decision-modal/decision-modal.component";
 import { MessageModalV2Component } from "./components/modales/message-modal-v2/message-modal-v2.component";
+import { SistemaHeaderComponent } from "./components/sistema-header/sistema-header.component";
 
 const componentes  = [DecisionModalComponent, 
-                      MessageModalV2Component];
+                      MessageModalV2Component,
+                      SistemaHeaderComponent];
 
 
 

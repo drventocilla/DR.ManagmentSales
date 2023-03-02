@@ -11,6 +11,8 @@ namespace DR.ManagmentSales.API.Extensions
             services.AddScoped<StatusCodeBuilder>();
             services.AddScoped<TokenService>();
             services.AddScoped<CryptoService>();
+            services.AddScoped<ProductoService>();
+            services.AddScoped<VentaService>();
         }
     }
 }

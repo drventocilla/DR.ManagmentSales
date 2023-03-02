@@ -15,7 +15,6 @@ export class UsuarioGuard implements CanActivate, CanActivateChild, CanLoad {
     constructor(
         private authService: AuthService,
         private router: Router,
-        
         private route: ActivatedRoute,
     ) {
      

@@ -9,6 +9,10 @@ import { ReporteVentaComponent } from './components/reporte-venta/reporte-venta.
 import { VentaComponent } from './components/venta/venta.component';
 import { PanelPrincipalComponent } from './components/panel-principal/panel-principal.component';
 import { SistemaRoutingModule } from "./sistema-routing.module";
+import { AngularDevExtremeModule } from "../shared/modules/devextreme-angular.module";
+import { ProductoService } from './services/producto.service';
+import { AsesorService } from './services/asesor.service';
+import { VentaService } from "./services/venta.service";
 
 
 const componentes  = [  ];
@@ -36,6 +40,7 @@ const directives = [];
   imports: [
     
     SharedModule,
+    AngularDevExtremeModule,
     SistemaRoutingModule
   ],
 
@@ -45,7 +50,9 @@ const directives = [];
   ],
 
   providers: [
-
+    ProductoService,
+    AsesorService,
+    VentaService
   ],
  
 })
