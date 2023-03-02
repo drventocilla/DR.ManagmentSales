@@ -31,17 +31,15 @@ Funcionalidades requeridas:
       ![image](https://user-images.githubusercontent.com/66335401/222520920-68535502-89dd-4603-92e7-5aea246400ed.png)
 
 3. Utilizar Github para apreciar el desarrollo
-
-  •  En el presente repositorio se observa el proceso de desarrollo
+    •  En el presente repositorio se observa el proceso de desarrollo
 
 4. Implementar nivel de seguridad API (Token JWT)
-
-  •  Configuración del servicio:
+   •  Configuración del servicio:
 
      Se envidencia en el archivo  ServicesExtensions.cs
      ![image](https://user-images.githubusercontent.com/66335401/222521237-83a158a7-f9a7-4d89-a450-b64a8b3d3122.png)
-
-  •  Creación del TOKEN Claims , Expiracion y Firma
+    
+   •  Creación del TOKEN Claims , Expiracion y Firma
   
      Se envidencia en el archivo  TokenService.cs
      ![image](https://user-images.githubusercontent.com/66335401/222521574-e23e1274-48a0-4f1e-a433-6b414e3773db.png)
@@ -56,6 +54,6 @@ Funcionalidades requeridas:
 
 6. Desplegar el API en Contenedores Docker
 
-  •  En proceso de configuración.
+   •  En proceso de configuración.
 
 
