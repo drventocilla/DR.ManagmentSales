@@ -8,6 +8,7 @@ import { ListaAsesorComponent } from './components/lista-asesor/lista-asesor.com
 import { ReporteVentaComponent } from './components/reporte-venta/reporte-venta.component';
 import { VentaComponent } from './components/venta/venta.component';
 import { PanelPrincipalComponent } from './components/panel-principal/panel-principal.component';
+import { SistemaRoutingModule } from "./sistema-routing.module";
 
 
 const componentes  = [  ];
@@ -34,7 +35,8 @@ const directives = [];
 
   imports: [
     
-    SharedModule
+    SharedModule,
+    SistemaRoutingModule
   ],
 
   exports : [

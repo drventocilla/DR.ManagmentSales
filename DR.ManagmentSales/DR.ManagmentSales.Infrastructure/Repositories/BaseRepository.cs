@@ -14,7 +14,7 @@ namespace DR.ManagmentSales.Infrastructure.Repositories
               
         private DbSet<T> _dbset;
 
-        public BaseRepository(DbContext context)
+        public BaseRepository(ManagmentSalesContext context)
         {
        
             this._dbset = context.Set<T>();
@@ -22,12 +22,12 @@ namespace DR.ManagmentSales.Infrastructure.Repositories
         }
 
       
-        public T Buscar(Expression<Func<T, bool>> filter = null)
+        public T Find(Expression<Func<T, bool>> filter = null)
         {
-            return Consulta(filter).FirstOrDefault();
+            return Query(filter).FirstOrDefault();
         }
 
-        public IQueryable<T> Consulta(Expression<Func<T, bool>> filter = null , Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool asNoTracking = true)
+        public IQueryable<T> Query(Expression<Func<T, bool>> filter = null , Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, bool asNoTracking = true)
         {
             IQueryable<T> query = asNoTracking?  this._dbset.AsNoTracking() : this._dbset;
 
@@ -45,21 +45,21 @@ namespace DR.ManagmentSales.Infrastructure.Repositories
                 
         }
       
-        public IEnumerable<T> Listar(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
+        public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
         {
-           return  Consulta(filter , orderBy).AsEnumerable();
+            return _dbset.ToList();
         }
 
-        public void Modificar(T entidad)
+        public void Update(T entidad)
         {
             _dbset.Update(entidad);
         }
 
-        public void Agregar(T entidad)
+        public void Add(T entidad)
         {
             _dbset.Add(entidad);
         }
-        public void Eliminar(T entidad)
+        public void Delete(T entidad)
         {
 
             _dbset.Remove(entidad);

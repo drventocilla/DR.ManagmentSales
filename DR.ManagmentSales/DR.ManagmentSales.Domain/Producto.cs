@@ -10,13 +10,24 @@ namespace DR.ManagmentSales.Domain
     public class Producto
     {
         [Key]
-        public string Id { get; set; }
-        public string Nombre { get; set; }
-        public double Precio { get; set; }
+        public string Id { get; private set; }
+        public string Nombre { get; private set; }
+        public double Precio { get; private set; }
 
-        public Producto()
+        public Producto(string id , string nombre , double precio)
         {
-                
+            Id = id;
+            Nombre = nombre;
+            Precio = precio;
         }
+
+        public Producto(string id)
+        {
+            Id = id;
+          
+        }
+
+        
+
     }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InitService } from './core/services/init.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ManagmentSalesFront';
+
+  constructor() {
+
+  }
+
 }
+

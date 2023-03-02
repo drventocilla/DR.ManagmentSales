@@ -12,6 +12,6 @@ namespace DR.ManagmentSales.Infrastructure.Interface
     public interface IVentaRepository : IRepositoryAdd<Venta> , IRepositorySearch<Venta>
     {
        
-        void Anular(string id);
+        void Cancel(string id);
     }
 }

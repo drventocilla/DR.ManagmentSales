@@ -14,41 +14,36 @@ namespace DR.ManagmentSales.Infrastructure.Repositories
     {
 
         private DbSet<Venta> _dbset;
-        private DbContext _context;
+        private ManagmentSalesContext _context;
 
-        public VentaRepository(DbContext context)
+        public VentaRepository(ManagmentSalesContext context)
         {
             this._context = context;
             this._dbset = context.Set<Venta>();
         }
 
-        public void Agregar(Venta entidad)
+        public void Add(Venta entidad)
         {
             _dbset.Add(entidad);
         }
 
-        public void Anular( string id)
+        public void Cancel( string id)
         {
-            Venta venta = new Venta();
-            venta.Id = id;
-            venta.EstadoActual = Estado.Valido;
-
-            _context.Attach(venta);
-            _context.Entry(venta).Property("EstadoActual").IsModified = true;
+            
 
         }
 
-        public Venta Buscar(Expression<Func<Venta, bool>> filter = null)
+        public Venta Find(Expression<Func<Venta, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Venta> Consulta(Expression<Func<Venta, bool>> filter = null, Func<IQueryable<Venta>, IOrderedQueryable<Venta>> orderBy = null, bool asNoTracking = true)
+        public IQueryable<Venta> Query(Expression<Func<Venta, bool>> filter = null, Func<IQueryable<Venta>, IOrderedQueryable<Venta>> orderBy = null, bool asNoTracking = true)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Venta> Listar(Expression<Func<Venta, bool>> filter = null, Func<IQueryable<Venta>, IOrderedQueryable<Venta>> orderBy = null)
+        public IEnumerable<Venta> Get(Expression<Func<Venta, bool>> filter = null, Func<IQueryable<Venta>, IOrderedQueryable<Venta>> orderBy = null)
         {
             throw new NotImplementedException();
         }

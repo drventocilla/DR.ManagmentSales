@@ -1,33 +1,34 @@
 ﻿using Core.GestionDeExcepciones;
 using Core;
 using Microsoft.AspNetCore.Mvc;
+using Core.Extensions;
 
 namespace DR.ManagmentSales.API.Helpers
 {
     public class StatusCodeBuilder
     {
 
-        public int GetStatusCode(Tipo tipoDeMensaje)
+        public int GetStatusCode(State tipoDeMensaje)
         {
 
 
-            if (tipoDeMensaje == Tipo.Error)
+            if (tipoDeMensaje == State.Error)
             {
                 return 500;
             }
-            if (tipoDeMensaje == Tipo.ErrorValidacion)
+            if (tipoDeMensaje == State.ErrorValidation)
             {
                 return 401;
             }
-            if (tipoDeMensaje == Tipo.ErrorDeRecursoNoEncontrado)
+            if (tipoDeMensaje == State.ErrorNotFound)
             {
                 return 404;
             }
-            else if (tipoDeMensaje == Tipo.Ok)
+            else if (tipoDeMensaje == State.Ok)
             {
                 return 200;
             }
-            else if (tipoDeMensaje == Tipo.Guia)
+            else if (tipoDeMensaje == State.Info)
             {
                 return 200;
             }
@@ -40,35 +41,34 @@ namespace DR.ManagmentSales.API.Helpers
         }
 
 
-        public ObjectResult ConstruirAPartirDeEstado<T>(EstadoDeEjecucion<T> estadoDeConsulta) where T : class
+        public ObjectResult ConstruirAPartirDeEstado<T>(StateExecution<T> state) where T : class
         {
 
 
             APIResponse<T> response = new APIResponse<T>();
-            response.Mensajes = estadoDeConsulta.Mensajes;
-            response.ValorObjeto = estadoDeConsulta.ValorObjeto;
-            response.Codigo = GetStatusCode(estadoDeConsulta.TipoEstado);
+            response.Message = state.MessageState.Copy();
+            response.Data = state.Data.Copy();
+            response.Code = GetStatusCode(state.StateType);
 
             var result = new ObjectResult(response);
-            result.StatusCode = GetStatusCode(estadoDeConsulta.TipoEstado);
+            result.StatusCode = GetStatusCode(state.StateType);
 
             return result;
 
         }
 
-        public ObjectResult ConstruirAPartirDeEstado(EstadoDeEjecucion estadoDeConsulta)
+        public ObjectResult ConstruirAPartirDeEstado(StateExecution state)
         {
 
-
             APIResponse response = new APIResponse();
-            response.Mensajes = estadoDeConsulta.Mensajes;
-            response.ValorObjeto = null;
-            response.Codigo = GetStatusCode(estadoDeConsulta.TipoEstado);
-
+            response.Message = state.MessageState.Copy();
+            response.Code = GetStatusCode(state.StateType);
+            
             var result = new ObjectResult(response);
-            result.StatusCode = GetStatusCode(estadoDeConsulta.TipoEstado);
+            result.StatusCode = GetStatusCode(state.StateType);
 
             return result;
+
 
         }
     }

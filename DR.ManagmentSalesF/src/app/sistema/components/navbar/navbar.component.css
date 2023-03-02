@@ -5,32 +5,6 @@
     max-width: 400px !important;
 }
 
-.notificacion-nueva {
-    background-color: #f4fae2 !important;
-    border-color: #f4fae2 !important;
-    border-width: 1px;
-    border-style: solid;
-}
-
-.notificacion-nueva:hover {
-    border-color: #206323 !important;
-    border-width: 1px;
-    border-style: solid;
-}
-
-.notificacion-leida {
-    background-color: white !important;
-    border-color: #c9d5ac !important;
-    border-width: 1px;
-    border-style: solid;
-}
-
-.notificacion-leida:hover {
-    border-color: #206323 !important;
-    border-width: 1px;
-    border-style: solid;
-}
-
 .navbar-container {
     position: absolute;
     top: 0px;
@@ -49,14 +23,14 @@ mat-sidenav {
 
 mat-toolbar {
     height: 64px;
-    background-color: #c9d5ac;
+    background-color: #0074c0;
     border-radius: 0 0 0.7rem 0.7rem;
     /* border-radius: 0 0 2rem 2rem; */
 }
 
 .toolbar-icon {
     cursor: pointer;
-    color: #444444;
+    color: #e9e9e9;
 }
 
 .nav-bottom-wrapper {
@@ -69,6 +43,7 @@ mat-toolbar {
 
 .alias {
     overflow: hidden;
+    color: #e9e9e9;
 }
 
 
@@ -86,7 +61,7 @@ mat-toolbar {
 }
 
 .logo-sidenav img {
-    width: 100%;
+    width: 60%;
 }
 
 .titulo-cabecera {
@@ -118,11 +93,11 @@ mat-toolbar {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #ffffff;
+    background-color: #fff;
     line-height: normal;
     cursor: pointer;
     padding: 0.7rem 1rem!important;
-    color: #555555;
+    color: #0074c0;
 }
 
 .sidenav-item:hover {
@@ -135,7 +110,7 @@ mat-toolbar {
 
 .sidenav-item-active {
     background-color: #ceeaff;
-    border-right: 4px solid #206323;
+    border-right: 4px solid #0074c0;
     border-radius: 0.25rem;
 }
 
@@ -182,7 +157,7 @@ mat-toolbar {
 .nav-grid ul li a {
     display: flex;
     align-items: stretch;
-    color: #444444;
+    color: #e9e9e9;
 }
 
 .nav-grid ul li a:hover {
@@ -193,18 +168,18 @@ mat-toolbar {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #C9D5AC;
+    background-color: #0074c0;
     line-height: normal;
     text-align: center;
     cursor: pointer;
 }
 
 .menu-inferior-item mat-icon {
-    color: #444444;
+    color: #e9e9e9;
 }
 
 .menu-inferior-item:hover {
-    background-color: #2d8331;
+    background-color: #00C0AC;
     border-radius: 4px 4px 0 0;
 }
 
@@ -266,7 +241,7 @@ mat-toolbar {
         margin-top: 0px;
     }
     .logo-sidenav img {
-        width: 80%;
+        width: 40%;
     }
     .sidenav-item-text {
         display: inline-block;

@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Core.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,17 +12,33 @@ namespace DR.ManagmentSales.Domain
     public class Asesor
     {
         [Key]
-        public string Id { get; set; }
-        public string Nombres { get; set; }
-        public string Apellidos { get; set; }
-        public string Celular { get; set; }
-        public string Email { get; set; }
+        public string Id { get; private set; }
+        public string Nombres { get; private set; }
+        public string Celular { get; private set; }
+        public string Email { get; private set; }
+        public string UsuarioId { get; private set; }
+        
+
+        public Asesor(string id , string nombres , string celular , string email )
+        {
+            Id = id;
+            Nombres = nombres;
+            Celular = celular;
+            Email = email;
+          
+        }
 
         public Asesor()
         {
 
+        }
 
+        public void AsignarUsuario(string usuarioId) 
+        {
+
+            UsuarioId = usuarioId;
 
         }
+
     }
 }

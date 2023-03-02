@@ -1,6 +1,6 @@
 ﻿using Core;
 using Core.GestionDeExcepciones;
-using Core.Servicios;
+using Core.Services;
 using DR.ManagmentSales.Domain;
 using DR.ManagmentSales.Infrastructure.Interface;
 
@@ -13,90 +13,97 @@ namespace DR.ManagmentSales.Application
         {
             _managmentSalesUOW = managmentSalesUOW;
         }
-        public async Task<EstadoDeEjecucion> ActualizarAsync(Producto entidad, CancellationToken cancellationToken)
+        public async Task<StateExecution> UpdateAsync(Producto entidad, CancellationToken cancellationToken)
         {
-            this._managmentSalesUOW.ProductoRepository.Modificar(entidad);
+            this._managmentSalesUOW._productoRepository.Update(entidad);
             await this._managmentSalesUOW.SaveChangesAsync(cancellationToken);
 
-            return (new EstadoDeEjecucion()
+            return (new StateExecution()
             {
+
                 Status = true,
-                TipoEstado = Tipo.Ok,
-                Mensajes = new List<Mensaje>() { new Mensaje() { MensajeGenerado = "Registro modificado con éxito." } }
+                StateType = State.Ok,
+                MessageState = new Message() { Description = "Registro modificado con éxito." },
 
             });
         }
 
-        public async Task<EstadoDeEjecucion> AgregarAsync(Producto entidad, CancellationToken cancellationToken)
+        public async Task<StateExecution> AddAsync(Producto entidad, CancellationToken cancellationToken)
         {
-            this._managmentSalesUOW.ProductoRepository.Agregar(entidad);
+            this._managmentSalesUOW._productoRepository.Add(entidad);
             await this._managmentSalesUOW.SaveChangesAsync(cancellationToken);
 
-            return (new EstadoDeEjecucion()
+            return (new StateExecution()
             {
+
+
                 Status = true,
-                TipoEstado = Tipo.Ok,
-                Mensajes = new List<Mensaje>() { new Mensaje() { MensajeGenerado = "Registro guardado con éxito." } }
+                StateType = State.Ok,
+                MessageState = new Message() { Description = "Registro guardado con éxito." },
+
 
             });
         }
 
-        public async Task<EstadoDeEjecucion> EliminarAsync(string id, CancellationToken cancellationToken)
+        public async Task<StateExecution> DeleteAsync(string id, CancellationToken cancellationToken)
         {
 
-            Producto entidad = this._managmentSalesUOW.ProductoRepository.Buscar(x => x.Id == id);
+            Producto entidad = this._managmentSalesUOW._productoRepository.Find(x => x.Id == id);
 
             if (entidad == null)
             {
-                return new EstadoDeEjecucion()
+                return new StateExecution()
                 {
-                    Status = true,
-                    TipoEstado = Tipo.ErrorDeRecursoNoEncontrado,
-                    Mensajes = new List<Mensaje>() { new Mensaje() { MensajeGenerado = "Registro no encontrado." } }
+                    Status = false,
+                    StateType = State.ErrorNotFound,
+                    MessageState = new Message() { Description = "Registro no encontrado." },
 
                 };
             }
             else
             {
-                this._managmentSalesUOW.ProductoRepository.Eliminar(entidad);
+                this._managmentSalesUOW._productoRepository.Delete(entidad);
                 await this._managmentSalesUOW.SaveChangesAsync(cancellationToken);
             }
 
 
 
 
-            return new EstadoDeEjecucion()
+            return new StateExecution()
             {
+
                 Status = true,
-                TipoEstado = Tipo.Ok,
-                Mensajes = new List<Mensaje>() { new Mensaje() { MensajeGenerado = "Registro eliminado con éxito." } }
+                StateType = State.ErrorNotFound,
+                MessageState = new Message() { Description = "Registro eliminado con éxito." },
 
             };
         }
 
-        public Task<EstadoDeEjecucion<Producto>> Buscar(string id, CancellationToken cancellationToken)
+        public Task<StateExecution<Producto>> Find(string id, CancellationToken cancellationToken)
         {
-            Producto entidad = this._managmentSalesUOW.ProductoRepository.Buscar(x => x.Id == id);
+            Producto entidad = this._managmentSalesUOW._productoRepository.Find(x => x.Id == id);
 
-            return Task.FromResult(new EstadoDeEjecucion<Producto>()
+            return Task.FromResult(new StateExecution<Producto>()
             {
                 Status = true,
-                TipoEstado = Tipo.Ok,
-                Mensajes = new List<Mensaje>() { new Mensaje() { MensajeGenerado = "Registro con encontrado." } },
-                ValorObjeto = entidad
+                StateType = State.ErrorNotFound,
+                MessageState = new Message() { Description = "Registro encontrado." },
+                Data = entidad
+
             });
         }
 
-        public Task<EstadoDeEjecucion<IEnumerable<Producto>>> ListarAsync(CancellationToken cancellationToken)
+        public Task<StateExecution<IEnumerable<Producto>>> GetAsync(CancellationToken cancellationToken)
         {
-            IEnumerable<Producto> ListaEntidad = this._managmentSalesUOW.ProductoRepository.Listar();
+            IEnumerable<Producto> ListaEntidad = this._managmentSalesUOW._productoRepository.Get();
 
-            return Task.FromResult(new EstadoDeEjecucion<IEnumerable<Producto>>()
+            return Task.FromResult(new StateExecution<IEnumerable<Producto>>()
             {
+
                 Status = true,
-                TipoEstado = Tipo.Ok,
-                Mensajes = new List<Mensaje>() { new Mensaje() { MensajeGenerado = "Registros encontrados." } },
-                ValorObjeto = ListaEntidad
+                StateType = State.ErrorNotFound,
+                MessageState = new Message() { Description = "Registros encontrados." },
+                Data = ListaEntidad
             });
         }
     }
