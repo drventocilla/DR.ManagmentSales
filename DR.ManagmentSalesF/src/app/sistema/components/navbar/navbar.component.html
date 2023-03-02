@@ -9,14 +9,6 @@
             </div>
             <nav class="sidenav-grid">
                 <ul>
-                    <li class="sidenav-item py-2" [routerLink]="['./panel']" routerLinkActive="sidenav-item-active">
-                        <a>
-                            <div class="sidenav-item-content-wrapper">
-                                <mat-icon>multiple_stop</mat-icon>
-                            </div>
-                            <span class="sidenav-item-text">Inicio</span>
-                        </a>
-                    </li>
                     <li class="sidenav-item py-2" [routerLink]="['./productos']" routerLinkActive="sidenav-item-active">
                         <a>
                             <div class="sidenav-item-content-wrapper">
@@ -25,7 +17,7 @@
                             <span class="sidenav-item-text">Productos</span>
                         </a>
                     </li>
-                    <li class="sidenav-item py-2" [routerLink]="['./asesor']" routerLinkActive="sidenav-item-active">
+                    <li class="sidenav-item py-2" [routerLink]="['./asesores']" routerLinkActive="sidenav-item-active">
                         <a>
                             <div class="sidenav-item-content-wrapper">
                                 <mat-icon>multiple_stop</mat-icon>
@@ -41,14 +33,7 @@
                             <span class="sidenav-item-text">Reporte Ventas</span>
                         </a>
                     </li>
-                    <li class="sidenav-item py-2" [routerLink]="['under-construction']" routerLinkActive="sidenav-item-active">
-                        <a>
-                            <div class="sidenav-item-content-wrapper">
-                                <mat-icon>contact_support</mat-icon>
-                            </div>
-                            <span class="sidenav-item-text">Ayuda y soporte</span>
-                        </a>
-                    </li>
+
                 </ul>
             </nav>
         </nav>
@@ -73,10 +58,7 @@
             </mat-icon>
 
             <mat-menu #menuUsuario="matMenu" class="menu-usuario">
-                <button mat-menu-item [routerLink]="['./datos-de-perfil']" class="">
-                    <mat-icon>account_box</mat-icon>
-                    <span>Mi perfil</span>
-                </button>
+
                 <button mat-menu-item class="" (click)="logOut()">
                     <mat-icon>logout</mat-icon>
                     <span>Cerrar sesion</span>
@@ -113,37 +95,28 @@
                     </div>
                 </a>
             </li>
-            <li class="menu-inferior-item" [routerLink]="['./asesor']" routerLinkActive="menu-inferior-item-active">
+            <li class="menu-inferior-item" [routerLink]="['./asesores']" routerLinkActive="menu-inferior-item-active">
                 <a>
                     <div class="p-2">
-                        <mat-icon routerLinkActive="icon-active">credit_card</mat-icon>
+                        <mat-icon routerLinkActive="icon-active">multiple_stop</mat-icon>
                         <p class="small" routerLinkActive="icon-active">Asesores</p>
-                    </div>
-                </a>
-            </li>
-            <li class="menu-inferior-item" [routerLink]="['./panel']" routerLinkActive="menu-inferior-item-active">
-                <a>
-                    <div class="p-2">
-                        <mat-icon routerLinkActive="icon-active">add</mat-icon>
-                        <p class="small" routerLinkActive="icon-active">Inicio</p>
                     </div>
                 </a>
             </li>
             <li class="menu-inferior-item" [routerLink]="['./reporte-venta']" routerLinkActive="menu-inferior-item-active">
                 <a>
                     <div class="p-2">
-                        <mat-icon routerLinkActive="icon-active">notifications</mat-icon>
+                        <mat-icon routerLinkActive="icon-active">multiple_stop</mat-icon>
                         <p class="small" routerLinkActive="icon-active">Reporte Ventas</p>
                     </div>
                 </a>
             </li>
             <li class="menu-inferior-item">
-                <a>
-                    <div class="p-2">
-                        <mat-icon routerLinkActive="icon-active">contact_support</mat-icon>
-                        <p class="small" routerLinkActive="icon-active">Ayuda y soporte</p>
-                    </div>
-                </a>
+
+            </li>
+
+            <li class="menu-inferior-item">
+
             </li>
         </ul>
     </nav>

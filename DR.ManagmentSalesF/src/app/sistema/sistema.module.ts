@@ -15,7 +15,14 @@ import { AsesorService } from './services/asesor.service';
 import { VentaService } from "./services/venta.service";
 
 
-const componentes  = [  ];
+const componentes  =  [ NavbarComponent,
+                        AsesorComponent,
+                        ProductoComponent,
+                        ListaProductoComponent,
+                        ListaAsesorComponent,
+                        ReporteVentaComponent,
+                        VentaComponent,
+                        PanelPrincipalComponent];
 const pipes  = [];
 const directives = [];
 
@@ -26,14 +33,7 @@ const directives = [];
     componentes,
     pipes,
     directives,
-    NavbarComponent,
-    AsesorComponent,
-    ProductoComponent,
-    ListaProductoComponent,
-    ListaAsesorComponent,
-    ReporteVentaComponent,
-    VentaComponent,
-    PanelPrincipalComponent,
+    
     
   ],
 

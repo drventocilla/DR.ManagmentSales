@@ -6,6 +6,7 @@ import { AsesorComponent } from './components/asesor/asesor.component';
 import { ProductoComponent } from './components/producto/producto.component';
 import { ReporteVentaComponent } from './components/reporte-venta/reporte-venta.component';
 import { ListaProductoComponent } from './components/lista-producto/lista-producto.component';
+import { ListaAsesorComponent } from './components/lista-asesor/lista-asesor.component';
 
 const routes: Routes = [
 
@@ -26,8 +27,8 @@ const routes: Routes = [
             component: PanelPrincipalComponent,
           },
           {
-            path: 'asesor' ,
-            component: AsesorComponent,
+            path: 'asesores' ,
+            component: ListaAsesorComponent,
           },
           {
             path: 'productos' ,

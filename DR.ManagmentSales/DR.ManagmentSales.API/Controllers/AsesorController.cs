@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DR.ManagmentSales.API.Controllers
 {
-    
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AsesorController : Controller
