@@ -54,9 +54,8 @@ Funcionalidades requeridas:
 
   •  Para iniciar sesión se usa el login admin y contraseña por defecto 123456789
 
-
 6. Desplegar el API en Contenedores Docker
 
-•  En proceso de configuración.
+  •  En proceso de configuración.
 
 
