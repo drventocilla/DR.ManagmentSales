@@ -1,15 +1,16 @@
 # DR.ManagmentSales
 
-Esta aplicación fue implementada en los frameworks .Net Core 6 API en BackEnd y Angular V12 para Frontón que se detalla a continuación.
+Esta aplicación fue implementada en los frameworks .Net Core 6 API en BackEnd y Angular V12 para FrontEnd que se detalla a continuación.
 
 BackEnd (.Net Core 6 Web API )
+
 •	La arquitectura del proyecto está basada en Domain Driven Desing.
   https://medium.com/modern-software-architecture/modern-software-architecture-1-domain-driven-design-f06fad8695f9
-  
 •	Se está usando patrones de diseño Builder , Repository ,  diseño UnitOfWork.
 •	Se ha implementado Swagger para la documentación de los API.
 
 FrontEnd (Angular V12 )
+
 •	Se ha aplicado concepto de lazy Loading y modularización.
   https://angular.io/guide/lazy-loading-ngmodules
   
