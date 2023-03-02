@@ -14,10 +14,10 @@ namespace DR.ManagmentSales.Infrastructure.Interface
     public interface IManagmentSalesUOW : IUnityOfWork
     {
 
-        public IRepositoryGeneric<Asesor> AsesorRepository { get; }
-        public IRepositoryGeneric<DetalleDeVenta> DetalleDeVentaRepository { get; }
-        public IRepositoryGeneric<Producto> ProductoRepository { get; }
-        public IRepositoryGeneric<Usuario> UsuarioRepository { get; }
-        public IVentaRepository VentaRepository { get; }
+        public IRepositoryGeneric<Asesor> _asesorRepository { get; }
+        public IRepositoryGeneric<DetalleDeVenta> _detalleDeVentaRepository { get; }
+        public IRepositoryGeneric<Producto> _productoRepository { get; }
+        public IRepositoryGeneric<Usuario> _usuarioRepository { get; }
+        public IVentaRepository _ventaRepository { get; }
     }
 }

@@ -7,4 +7,4 @@ export enum ResponseType {
     Json = "json",
     Msstream = "ms-stream"
 
-}
+}2

@@ -12,41 +12,57 @@ namespace TarjetaPresentacion.API.Filters
         {
             this._statusCodeBuilder = statusCodeBuilder;
         }
-        public void OnException(ExceptionContext context)
+        public void OnException(ExceptionContext eContext)
         {
 
 
-            if (context.Exception is BusinessLogicException)
+            if (eContext.Exception is BusinessLogicException)
             {
 
-                BusinessLogicException excepcion = (BusinessLogicException)context.Exception;
+                BusinessLogicException excepcion = (BusinessLogicException)eContext.Exception;
 
-                EstadoDeEjecucion estadoDeEjecucion = new EstadoDeEjecucion();
-                estadoDeEjecucion.Status = false;
-                estadoDeEjecucion.AgregarMensaje(excepcion.mensajeDeValidacion);
+                StateExecution state = new StateExecution();
+                state.Status = false;
+                state.MessageState = excepcion.mensajeDeValidacion;
+                var result = _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+                eContext.Result = result;
 
-                var result = _statusCodeBuilder.ConstruirAPartirDeEstado(estadoDeEjecucion);
+            }
+            else if (eContext.Exception is ArgumentException)
+            {
+                StateExecution state = new StateExecution();
+                state.Status = false;
+                state.StateType = State.ErrorValidation;
+              
+                Message mensaje = new Message();
+                mensaje.Description = "Validación de entidad.";
+                mensaje.Detail = $"{eContext.Exception.Message}-{eContext.Exception.InnerException}";
+                mensaje.Action = "Revise los valores ingresados.";
 
-                context.Result = result;
+                state.MessageState = mensaje;
+
+                var result = _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+
+                eContext.Result = result;
 
             }
             else
             {
 
 
-                EstadoDeEjecucion estadoDeEjecucion = new EstadoDeEjecucion();
-                estadoDeEjecucion.Status = false;
-                estadoDeEjecucion.TipoEstado = Tipo.Error;
-                Mensaje mensaje = new Mensaje();
-                mensaje.MensajeGenerado = "Error Interno de Servidor";
-                mensaje.DetalleDelMensaje = $"{context.Exception.Message}-{context.Exception.InnerException}";
-                mensaje.AccionARealizar = "Comuníquese con soporte técnico.";
-               
-                estadoDeEjecucion.AgregarMensaje(mensaje);
+                StateExecution state = new StateExecution();
+                state.Status = false;
+                state.StateType = State.Error;
+                Message mensaje = new Message();
+                mensaje.Description = "Error Interno de servidor";
+                mensaje.Detail = $"{eContext.Exception.Message}-{eContext.Exception.InnerException}";
+                mensaje.Action = "Comuníquese con soporte técnico.";
 
-                var result = _statusCodeBuilder.ConstruirAPartirDeEstado(estadoDeEjecucion);
+                state.MessageState = mensaje;
 
-                context.Result = result;
+                var result = _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+
+                eContext.Result = result;
 
             }
 

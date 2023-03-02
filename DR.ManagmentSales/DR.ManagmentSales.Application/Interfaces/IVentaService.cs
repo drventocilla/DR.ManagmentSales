@@ -11,10 +11,10 @@ namespace DR.ManagmentSales.Application.Interfaces
 {
     public interface IVentaService
     {
-        Task<EstadoDeEjecucion> AgregarAsync(Venta entidad, CancellationToken cancellationToken);
-        Task<EstadoDeEjecucion> AnularAsync(string id, CancellationToken cancellationToken);
+        Task<StateExecution> AddAsync(Venta entidad, CancellationToken cancellationToken);
+        Task<StateExecution> CancelAsync(string id, CancellationToken cancellationToken);
 
-        Task<EstadoDeEjecucion<IEnumerable<Venta>>> ReporteAsync(DateTime FechaInicial , DateTime FechaFinal ,  CancellationToken cancellationToken);
+        Task<StateExecution<IEnumerable<Venta>>> ReportAsync(DateTime FechaInicial , DateTime FechaFinal ,  CancellationToken cancellationToken);
 
     }
 }

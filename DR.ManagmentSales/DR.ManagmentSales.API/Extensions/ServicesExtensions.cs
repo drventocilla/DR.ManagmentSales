@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Features;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Runtime.CompilerServices;
 
 namespace DR.ManagmentSales.API.Extensions
 {
@@ -71,6 +72,9 @@ namespace DR.ManagmentSales.API.Extensions
 
                
             });
+
+
+            services.AddSingleton<TokenService>();
         }
     }
 }

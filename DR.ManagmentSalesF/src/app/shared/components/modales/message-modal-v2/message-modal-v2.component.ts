@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Mensaje } from 'src/app/shared/models/mensaje.model';
+import { Message } from 'src/app/shared/models/message.model';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class MessageModalV2Component implements OnInit {
 
   _mensajePieDialogo : string ; 
   _titulo: string = "";
-  _mensaje:Mensaje = new Mensaje();
+  _mensaje:Message = new Message();
 
   constructor(
     public dialogRef: MatDialogRef<MessageModalV2Component>,

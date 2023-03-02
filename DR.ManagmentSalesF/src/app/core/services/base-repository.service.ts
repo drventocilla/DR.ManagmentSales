@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ResponseType } from 'src/app/shared/models/response-type.mode';
-
 import { APIResponse } from 'src/app/shared/models/api-reponse.model';
 import { throwError } from 'rxjs';
-import { Mensaje } from 'src/app/shared/models/mensaje.model';
 import { catchError } from 'rxjs/operators';
 import { Environment } from 'src/environments/enviroment-model';
 
@@ -122,12 +120,9 @@ export class BaseRepositoryService {
          
             response.codigo = 500; 
             response.status = false;
-
-            let mensaje = new Mensaje();
-            mensaje.mensajeGenerado = "Error al conectar al servidor.";
-            mensaje.accionARealizar = "Revise su conexión a internet.";                                                                                                         
-            response.mensaje.push(mensaje);
-
+            response.message.action   = "Revise su conexión a internet.";
+            response.message.description= "Error al conectar al servidor.";
+            
             return throwError(response); 
         
           } else {

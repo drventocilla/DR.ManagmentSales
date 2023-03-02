@@ -13,14 +13,24 @@ namespace DR.ManagmentSales.API.Extensions
         public static void RegisterInfraestructure(this IServiceCollection services) {
 
 
-            services.AddDbContext<ManagmentSalesContext>();
+            services.AddDbContext<DbContext, ManagmentSalesContext>(options =>
+            options
+                //.UseSqlServer(Configuration.GetConnectionString(nameof(ExchangeDbContext))
+                // //, options => options.EnableRetryOnFailure()
+                // )
+                .UseInMemoryDatabase(databaseName: "ManagmentSalesDB")
+                //.UseLoggerFactory(loggerFactory)
+                //.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning))
+                .EnableSensitiveDataLogging(true)
 
+            );
+
+            services.AddDbContext<ManagmentSalesContext>();
+            services.AddTransient(typeof(IRepositoryGeneric<>), typeof(BaseRepository<>));
+            services.AddTransient<IVentaRepository, VentaRepository>();
             services.AddScoped<IManagmentSalesUOW, ManagmentSalesUOW>();
 
-            services.AddTransient(typeof(IRepositoryGeneric<>), typeof(BaseRepository<>));
-
-            //services.AddTransient<ICurrencyRepository, CurrencyRepository>();
-
+            
         }
 
     }

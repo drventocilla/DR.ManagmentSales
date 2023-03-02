@@ -1,42 +1,50 @@
 <mat-sidenav-container class="navbar-container">
     <mat-sidenav mode="side" opened #sidenav>
         <nav class="sidenav-wrapper">
-            <div [routerLink]="['/app/cliente']" class="logo-sidenav logo-c-g logo-c-m">
-                <img src="assets/img/logotipo/logotipo_cf_cuadrado.svg" width="" alt="" loading="lazy">
+            <div [routerLink]="['/app/cliente']" class="text-center logo-sidenav pt-2 logo-c-g logo-c-m">
+                <img src="assets/img/logo.png" width="" alt="" loading="lazy">
             </div>
-            <div [routerLink]="['/app/cliente']" class="logo-sidenav logo-r-g logo-r-m">
-                <img src="assets/img/logotipo/logotipo_cf_rectangulo.svg" width="" alt="" loading="lazy">
+            <div [routerLink]="['/app/cliente']" class="text-center logo-sidenav pt-2 logo-r-g logo-r-m">
+                <img src="assets/img/logo.png" width="" alt="" loading="lazy">
             </div>
             <nav class="sidenav-grid">
                 <ul>
-                    <li class="sidenav-item py-2" [routerLink]="['./operacion']" routerLinkActive="sidenav-item-active">
+                    <li class="sidenav-item py-2" [routerLink]="['./panel']" routerLinkActive="sidenav-item-active">
                         <a>
                             <div class="sidenav-item-content-wrapper">
-                                <img src="../../../../../../assets/img/menu-icons/operation.svg" alt="Inicio" title="Inicio" height="30" width="30">
+                                <mat-icon>multiple_stop</mat-icon>
                             </div>
                             <span class="sidenav-item-text">Inicio</span>
                         </a>
                     </li>
-                    <li class="sidenav-item py-2" [routerLink]="['./mis-operaciones']" routerLinkActive="sidenav-item-active">
+                    <li class="sidenav-item py-2" [routerLink]="['./producto']" routerLinkActive="sidenav-item-active">
                         <a>
                             <div class="sidenav-item-content-wrapper">
-                                <img src="../../../../../../assets/img/menu-icons/my_operations.svg" alt="Mis operaciones" title="Mis operaciones" height="30" width="30">
+                                <mat-icon>multiple_stop</mat-icon>
                             </div>
-                            <span class="sidenav-item-text">Mis operaciones</span>
+                            <span class="sidenav-item-text">Productos</span>
                         </a>
                     </li>
-                    <li class="sidenav-item py-2" [routerLink]="['./cuentas-bancarias']" routerLinkActive="sidenav-item-active">
+                    <li class="sidenav-item py-2" [routerLink]="['./asesor']" routerLinkActive="sidenav-item-active">
                         <a>
                             <div class="sidenav-item-content-wrapper">
-                                <img src="../../../../../../assets/img/menu-icons/credit_card.svg" alt="Productos bancarios" title="Mis cuentas" height="30" width="30">
+                                <mat-icon>multiple_stop</mat-icon>
                             </div>
-                            <span class="sidenav-item-text">Mis cuentas</span>
+                            <span class="sidenav-item-text">Asesores</span>
                         </a>
                     </li>
-                    <li class="sidenav-item py-2">
+                    <li class="sidenav-item py-2" [routerLink]="['./reporte-venta']" routerLinkActive="sidenav-item-active">
                         <a>
                             <div class="sidenav-item-content-wrapper">
-                                <img src="../../../../../../assets/img/menu-icons/help.svg" alt="Ayuda y soporte" title="Ayuda y soporte" height="30" width="30">
+                                <mat-icon>multiple_stop</mat-icon>
+                            </div>
+                            <span class="sidenav-item-text">Reporte Ventas</span>
+                        </a>
+                    </li>
+                    <li class="sidenav-item py-2" [routerLink]="['under-construction']" routerLinkActive="sidenav-item-active">
+                        <a>
+                            <div class="sidenav-item-content-wrapper">
+                                <mat-icon>contact_support</mat-icon>
                             </div>
                             <span class="sidenav-item-text">Ayuda y soporte</span>
                         </a>
@@ -49,40 +57,30 @@
     <mat-sidenav-content>
         <!-- #region TOOLBAR -->
         <mat-toolbar class="toolbar-cliente">
-            <!-- <a class="d-none d-md-inline" [routerLink]="['/app/cliente']">
-          <img  [routerLink]="['/app/cliente']" 
-                src="assets/img/logotipo/logotipo_cf_rectangulo.svg" 
-                width="160"
-                alt="" 
-                loading="lazy">
-        </a> -->
-            <a class="logo-top-m logo-top-g" [routerLink]="['/app/cliente']">
-                <img [routerLink]="['/app/cliente']" src="assets/img/logotipo/logotipo_cf_rectangulo.svg" width="160" alt="" loading="lazy">
-            </a>
+            <!--  <a class="d-none d-md-inline" [routerLink]="['/app/cliente']">
+                <img [routerLink]="['/app/cliente']" src="assets/img/logo.png" width="160" alt="" loading="lazy">
+            </a> -->
+
             <span class="titulo-cabecera">{{titulo$ | async}}</span>
             <!-- <span>{{_tituloActual}}</span> -->
             <span class="navbar-spacer"></span>
 
             <span class="medium pl-4 pr-1 pr-2 pointer alias" [matMenuTriggerFor]="menuUsuario">
-                     {{_perfilActual.alias}}
+                    {{usuarioActuAl.nombre}}
             </span>
             <mat-icon class="toolbar-icon pr-4" aria-hidden="false" [matMenuTriggerFor]="menuUsuario" aria-label="Example heart icon">
                 account_circle
             </mat-icon>
 
             <mat-menu #menuUsuario="matMenu" class="menu-usuario">
-                <button mat-menu-item [routerLink]="['./elegir-perfil']" class="">
-            <mat-icon>assignment_ind</mat-icon>
-            <span>Seleccionar perfil</span>
-          </button>
                 <button mat-menu-item [routerLink]="['./datos-de-perfil']" class="">
-            <mat-icon>account_box</mat-icon>
-            <span>Mi perfil</span>
-          </button>
-                <button mat-menu-item class="" (click)="cerrarSesion()">
-            <mat-icon>logout</mat-icon>
-            <span>Cerrar sesion</span>
-          </button>
+                    <mat-icon>account_box</mat-icon>
+                    <span>Mi perfil</span>
+                </button>
+                <button mat-menu-item class="" (click)="logOut()">
+                    <mat-icon>logout</mat-icon>
+                    <span>Cerrar sesion</span>
+                </button>
             </mat-menu>
         </mat-toolbar>
         <!-- #endregion TOOLBAR -->
@@ -111,7 +109,7 @@
                 <a>
                     <div class="p-2">
                         <mat-icon routerLinkActive="icon-active">multiple_stop</mat-icon>
-                        <p class="small" routerLinkActive="icon-active">Mis operaciones</p>
+                        <p class="small" routerLinkActive="icon-active">Productos</p>
                     </div>
                 </a>
             </li>
@@ -119,7 +117,7 @@
                 <a>
                     <div class="p-2">
                         <mat-icon routerLinkActive="icon-active">credit_card</mat-icon>
-                        <p class="small" routerLinkActive="icon-active">Mis cuentas</p>
+                        <p class="small" routerLinkActive="icon-active">Asesores</p>
                     </div>
                 </a>
             </li>
@@ -127,7 +125,7 @@
                 <a>
                     <div class="p-2">
                         <mat-icon routerLinkActive="icon-active">add</mat-icon>
-                        <p class="small" routerLinkActive="icon-active">Nueva operación</p>
+                        <p class="small" routerLinkActive="icon-active">Inicio</p>
                     </div>
                 </a>
             </li>
@@ -135,7 +133,7 @@
                 <a>
                     <div class="p-2">
                         <mat-icon routerLinkActive="icon-active">notifications</mat-icon>
-                        <p class="small" routerLinkActive="icon-active">Alertas tipo de cambio</p>
+                        <p class="small" routerLinkActive="icon-active">Reporte Ventas</p>
                     </div>
                 </a>
             </li>

@@ -32,47 +32,42 @@ export class AuthService {
   constructor(
     private repository: RepositoryService,
     private localStorageService: LocalStorageService,
-    private router: Router,
     private cryptoService: CryptoService
   ) {
-    console.log('aqui');
-    this.obtenerUsuarioDeLS();
+        this.getUserLS();
   }
 
 
-  //#region parsear usuario desde localstorage en la primera carga del login
-  public obtenerUsuarioDeLS() {
+  
+  public getUserLS() {
     // console.log("ENTRO A obtenerUsuarioDeLS()");
     if (this.localStorageService.validarExistencia(this.KEYUSUARIO)) {
       if (this.localStorageService.get(this.KEYUSUARIO) != null) {
         // console.log("existe la key");
-        this.parsearUsuarioDeLS();
+        this.parseUser();
       }
       else {
         // console.log("existe pero no parsea");
-        this.asignarUsuarioPorDefecto();
-        this.parsearUsuarioDeLS();
+        this.setDefaultUser();
+        this.parseUser();
       }
     }
     else {
       // console.log("no existe la key");
-      this.asignarUsuarioPorDefecto();
-      this.parsearUsuarioDeLS();
+      this.setDefaultUser();
+      this.parseUser();
     }
   }
-  private asignarUsuarioPorDefecto() {
+  private setDefaultUser() {
     this.localStorageService.set(this.KEYUSUARIO, new UserFront());
   }
-  private parsearUsuarioDeLS() {
-    console.log("entro parsearUsuarioDeLS()");
+  private parseUser() {
+    
     this._usuarioActual = this.localStorageService.get(this.KEYUSUARIO);
-    console.log("parsearUsuarioDeLS:  _usuarioActual ", this._usuarioActual);
-
+    
     let tokenAux = this._usuarioActual.token;
-    console.log("parsearUsuarioDeLS:  tokenAux ", tokenAux);
+    
     this.localStorageService.set(this.KEYTOKEN, tokenAux);
-     console.log("token en parsearusuaroidels: ", this.localStorageService.get(this.KEYTOKEN));
-
     this.usuarioSubject$.next(this._usuarioActual);
 
     //TODO: MUY IMPORTANTE: Evaluar como se usara la expiracion del token y a donde llevara este (no deberia de llevar al login para evitar problemas de bucle infirnito con el cliente guard)
@@ -86,59 +81,33 @@ export class AuthService {
         this.estaLogeado$.next(true);
     }
   }
-  //#endregion
 
-  //#region 
-
-  public logout() {
-    this.localStorageService.clear();
-    this.obtenerUsuarioDeLS();
-    location.reload();
-  }
-
- 
-  public setearUsuarioActualALS(){
+  public setUserInLS(){
     let usuarioASetear: UserFront = this.usuarioSubject$.getValue();
     this.localStorageService.set(this.KEYUSUARIO, usuarioASetear);
   }
-  //#region 
-
-
-  get usuarioFrontActual() {
-    return { ...this.usuarioSubject$.getValue() };
-  }
-  /**Usuario actual logeado, este usuario no tiene asignadas las contraseñas por seguridad */
-  get usuarioActual() {
-    return { ...this.usuarioSubject$.getValue() };
-  }
-  get clienteActual() {
-    return { ...this.usuarioSubject$.getValue() };
-  }
-
-  public setearUsuarioFrontGlobal(usuarioFront: UserFront) {
+ 
+  public setUserSubject(usuarioFront: UserFront) {
     this.usuarioSubject$.next(usuarioFront);
     this.estaLogeado$.next(true);
-    this.setearUsuarioActualALS();
+    this.setUserInLS();
   }
 
-  public setearUsuarioGlobal(usuario: UserFront) {
+  public setUser(usuario: UserFront) {
     // this.usuarioSubject$.getValue().usuario = { ...usuario };
     this.usuarioSubject$.next({ ...usuario });
-    this.setearUsuarioActualALS();
+    this.setUserInLS();
   }
  
  
-  public setearTokenGlobal(token: string) {
+  public setToken(token: string) {
     // this.usuarioSubject$.getValue().token = token;
     this.usuarioSubject$.next({ ...this.usuarioSubject$.getValue(), token: token });
-    this.setearUsuarioActualALS();
+    this.setUserInLS();
     this.localStorageService.set(this.KEYTOKEN, token);
   }
    
-  
-  
-  //#endregion 
-
+  //#region 
 
   
   public obtenerKeyToken() {
@@ -155,9 +124,16 @@ export class AuthService {
     return `api/session/${ruta}`;
   }
 
-  public iniciarSesion(loginModel: LoginModel) {
+  public signIn(loginModel: LoginModel) {
     loginModel = { ...loginModel, password: this.cryptoService.encriptarParaBack(loginModel.password) };
   
-    return this.repository.create(this.construirRuta('iniciarsesion'), loginModel);
+    return this.repository.create(this.construirRuta('signIn'), loginModel);
   }
+
+  public logout() {
+    this.localStorageService.clear();
+    this.getUserLS();
+    location.reload();
+  }
+
 }

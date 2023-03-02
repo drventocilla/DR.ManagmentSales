@@ -12,14 +12,26 @@ export class SpinnerService {
 
   }
 
-  showSquareFullScreen(name: string) {
+  showBallAtom(name: string) {
     return this.ngxSpinnerService.show(name,
       {
         size: "large",
         color: "#008aca",
         bdColor: "rgba(0,0,0,0.7)",
         fullScreen: true,
-        type: "custom"
+        type : "ball-atom"
+      });
+  }
+
+
+  showTimer(name: string) {
+    return this.ngxSpinnerService.show(name,
+      {
+        size: "large",
+        color: "#008aca",
+        bdColor: "rgba(0,0,0,0.7)",
+        fullScreen: true,
+        type : "ball-atom"
       });
   }
 

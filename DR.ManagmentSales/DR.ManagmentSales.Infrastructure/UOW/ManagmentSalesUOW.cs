@@ -13,21 +13,32 @@ namespace DR.ManagmentSales.Infrastructure.UOW
 {
     public class ManagmentSalesUOW : IManagmentSalesUOW
     {
-        private DbContext _context;
+        private ManagmentSalesContext _context;
 
-        public IRepositoryGeneric<Asesor> AsesorRepository { get; }
-        public IRepositoryGeneric<Producto> ProductoRepository { get; }
+        public IRepositoryGeneric<Asesor> _asesorRepository { get; }
+        public IRepositoryGeneric<Producto> _productoRepository { get; }
 
 
-        public IRepositoryGeneric<DetalleDeVenta> DetalleDeVentaRepository { get; }
+        public IRepositoryGeneric<DetalleDeVenta> _detalleDeVentaRepository { get; }
         
-        public IRepositoryGeneric<Usuario> UsuarioRepository { get; }
+        public IRepositoryGeneric<Usuario> _usuarioRepository { get; }
 
-        public IVentaRepository VentaRepository { get; }
+        public IVentaRepository _ventaRepository { get; }
 
-        public ManagmentSalesUOW(DbContext context )
+        public ManagmentSalesUOW(ManagmentSalesContext context,
+                                 IRepositoryGeneric<Usuario> usuarioRepository,
+                                 IRepositoryGeneric<Asesor> asesorRepository,
+                                 IRepositoryGeneric<Producto> productoRepository,
+                                 IRepositoryGeneric<DetalleDeVenta> detalleDeVentaRepository,
+                                 IVentaRepository ventaRepository)
         {
             _context = context;
+            _usuarioRepository = usuarioRepository;
+            _asesorRepository = asesorRepository;
+            _productoRepository = productoRepository;
+            _detalleDeVentaRepository = detalleDeVentaRepository;
+            _ventaRepository = ventaRepository;
+
         }
 
        

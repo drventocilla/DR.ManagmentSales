@@ -7,15 +7,27 @@ using System.Threading.Tasks;
 
 namespace DR.ManagmentSales.Domain
 {
-    public class Usuario : Auditoria
+    public class Usuario
     {
         [Key]
-        public string Id { get; set; }
-        public string Nombre { get; set; }
-        public string Password { get; set; }
-        public string Login { get; set; }
-        public TipoUsuario TipoUsuario { get; set; }
+        public string Id { get; private set; }
+        public string Nombre { get; private set; }
+        public string Password { get; private set; } 
+        public string Login { get; private set; }
+        public TipoUsuario TipoUsuario { get; private set; }
 
+        public Usuario(string id ,string nombre , string password ,string login , TipoUsuario  tipoUsuario )
+        {
+            Id = id;
+            Nombre = nombre;
+            Password = password;
+            Login = login;
+            TipoUsuario = tipoUsuario;
+        }
+        public Usuario(string id)
+        {
+            Id = id;
+        }
         public Usuario()
         {
 
