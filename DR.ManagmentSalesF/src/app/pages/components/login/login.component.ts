@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/core/models/login.model';
 import { UserFront } from 'src/app/core/models/user-front.model';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { APIResponse } from 'src/app/shared/models/api-reponse.model';
+import { ProblemDetails } from 'src/app/shared/models/problem-details.model';
+import { SucessResponse } from 'src/app/shared/models/succes-response.model';
 import { SharedModalService } from 'src/app/shared/services/shared-modal.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { SubSink } from 'subsink';
@@ -30,10 +31,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     private spinner: SpinnerService,
     private sharedModalService: SharedModalService,
     private router: Router,
-    
+
    ) {
-    
-  
+
+
   }
 
   ngOnInit() {
@@ -57,7 +58,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   signIn(loginForm) {
 
     if (this.loginForm.valid) {
-      
+
       let login: LoginModel = {
         login: loginForm.login,
         password: loginForm.password
@@ -75,8 +76,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   execute_signIn(login: LoginModel) {
 
     this.spinner.showTimer("login");
-    this.authService.signIn(login) 
-      .subscribe((resultado: APIResponse) => {
+    this.authService.signIn(login)
+      .subscribe((resultado: SucessResponse) => {
 
         this.spinner.hide("login");
         let usuarioObtenido : UserFront = resultado.data;
@@ -84,15 +85,15 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authService.setUserSubject(usuarioObtenido);
         this.authService.setToken(usuarioObtenido.token);
         this.router.navigate(['/sistema']);
-      
-      }, (error: any) => {
+
+      }, (error: ProblemDetails) => {
 
         this.spinner.hide("login");
         console.log('error.mensaje', error);
         try {
-          this.sharedModalService.mostrarMessageModal(error.message , false);
+          this.sharedModalService.mostrarMessageModal({description: error.title , detail :error.detail }, false);
         } catch (e) {
-          this.sharedModalService.mostrarMessageModal( { description:"Error al realizar la operación",  action : "Comuníquese con soporte técnico." }  , false);
+          this.sharedModalService.mostrarMessageModal( {description :'Error al realizar la operación, intente recargar la página'}, false);
         }
       });;
   }

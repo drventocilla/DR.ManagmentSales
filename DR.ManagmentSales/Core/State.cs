@@ -6,12 +6,10 @@ namespace Core
 {
     public enum State
     {
-        Error,
         ErrorValidation,
-        ErrorNotFound,
+        OkNotContent,
+        ErrorNotContent,
         Ok,
-        Warning,
-        Info,
         Ninguno,
 
     }

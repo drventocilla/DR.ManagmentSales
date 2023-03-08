@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TituloCabeceraService } from 'src/app/core/services/titulo.service';
-import { APIResponse } from 'src/app/shared/models/api-reponse.model';
 import { FormResult } from 'src/app/shared/models/form-result';
 import { SharedModalService } from 'src/app/shared/services/shared-modal.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { AsesorService } from '../../services/asesor.service';
 import { Asesor } from '../../models/asesor.model';
 import { AsesorComponent } from '../asesor/asesor.component';
+import { SucessResponse } from 'src/app/shared/models/succes-response.model';
+import { ProblemDetails } from 'src/app/shared/models/problem-details.model';
 
 @Component({
   selector: 'app-lista-asesor',
@@ -75,18 +76,19 @@ export class ListaAsesorComponent implements OnInit {
     this.spinner.showBallAtom("lista-asesores");
 
     this.asesorService.getAll()
-      .subscribe((response: APIResponse) => {
+      .subscribe((response: SucessResponse) => {
 
         this.listaDeAsesores = response.data;
-        
+
         this.spinner.hide("lista-asesores");
       }
-        , (error: APIResponse) => {
+        , (error: ProblemDetails) => {
+          
           this.spinner.hide("lista-asesores");
           try {
-            this.sharedModalService.mostrarMessageModal(error.message, false);
+            this.sharedModalService.mostrarMessageModal({description: error.title , detail :error.detail }, false);
           } catch (e) {
-            this.sharedModalService.mostrarMessageModal( {description :'Error al conectar con el servidor, intente recargar la página'}, false);
+            this.sharedModalService.mostrarMessageModal( {description :'Error al realizar la operación, intente recargar la página'}, false);
           }
 
         });
@@ -98,7 +100,7 @@ export class ListaAsesorComponent implements OnInit {
 
     this.spinner.showBallAtom("lista-asesores");
     this.asesorService.delete(codigo).subscribe((respuesta: any) => {
-    
+
     this.spinner.hide("lista-asesores");
       this.getAll();
     },

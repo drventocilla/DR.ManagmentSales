@@ -8,7 +8,7 @@ namespace DR.ManagmentSales.API.Extensions
     {
         public static void ConfigureUtils(this IServiceCollection services)
         {
-            services.AddTransient<StatusCodeBuilder>();
+            services.AddTransient<ResponseFactory>();
 
         }
 

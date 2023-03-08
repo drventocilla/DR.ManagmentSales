@@ -42,14 +42,16 @@ namespace DR.ManagmentSales.API.Extensions
                 o.MultipartHeadersLengthLimit = int.MaxValue;
             });
 
-            services.AddScoped<StatusCodeBuilder>();
+            services.AddScoped<ResponseFactory>();
         }
 
 
-        public static void ConfigureJWToken(this IServiceCollection services, IConfiguration Configuration)
+        public static void ConfigureJWToken(this IServiceCollection services)
         {
             var jwtSettings = new JwtSettings();
-            Configuration.Bind(nameof(JwtSettings), jwtSettings);
+            jwtSettings.Secret = "4xGx7uZCLwCO4b98GbZZsYCAsRmQQESsyUunST-A4Cc85Nx6fNkICrl13p5704WQxwweHHitZ2iM_sQlIGx25VA8lIfHl9y_cZGX6pu0GplRcYmPvusv822kFzmt7rI7pbKjoB-0AWJLnchZN_jaUIQVFgMqnUxHSa_x4jl3OcU";
+            //services.Configure<JwtSettings>(Configuration.GetSection("JwtSettings"));
+            //Configuration.Bind(nameof(JwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
 
             var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);

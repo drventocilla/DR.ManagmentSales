@@ -16,20 +16,20 @@ namespace DR.ManagmentSales.API.Controllers
     public class VentaController : Controller
     {
         private readonly VentaService _ventaService;
-        private readonly StatusCodeBuilder _statusCodeBuilder;
+        private readonly ResponseFactory _responseFactory;
 
 
-        public VentaController(VentaService ventaService, 
-                               StatusCodeBuilder statusCodeBuilder)
+        public VentaController(VentaService ventaService,
+                               ResponseFactory responseFactory)
         {
             _ventaService = ventaService;
-            _statusCodeBuilder = statusCodeBuilder;
+            _responseFactory = responseFactory;
             
         }
 
         [HttpGet("Report")]
-        [ProducesResponseType(typeof(APIResponse<ReportVenta>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(SucessResponse<ReportVenta>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Report( string fechaInicial , string fechaFinal ,   CancellationToken token) {
 
             var _fechaInicial = fechaInicial.Split('-');
@@ -59,7 +59,7 @@ namespace DR.ManagmentSales.API.Controllers
 
 
 
-            return _statusCodeBuilder.ConstruirAPartirDeEstado(new StateExecution<ReportVenta>() { Status = state.Status , Data = report , MessageState = state.MessageState });
+            return _responseFactory.CreateReponse(new StateExecution<ReportVenta>() { Status = state.Status , Data = report , MessageState = state.MessageState });
 
         }
 

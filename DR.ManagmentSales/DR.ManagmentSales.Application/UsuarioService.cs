@@ -62,7 +62,7 @@ namespace DR.ManagmentSales.Application
                 return (new StateExecution<Usuario>()
                 {
                     Status = false,
-                    StateType = State.ErrorNotFound,
+                    StateType = State.ErrorNotContent,
                     MessageState = new Message() { Description = "Usuario no existe." },
                     
                 });
@@ -74,7 +74,7 @@ namespace DR.ManagmentSales.Application
                 return (new StateExecution<Usuario>()
                 {
                     Status = true,
-                    StateType = State.ErrorNotFound,
+                    StateType = State.Ok,
                     MessageState = new Message() { Description = "Session Validada." },
                     Data = usuario
                 });
@@ -105,7 +105,7 @@ namespace DR.ManagmentSales.Application
                 {
 
                     Status = false,
-                    StateType = State.ErrorNotFound,
+                    StateType = State.ErrorNotContent,
                     MessageState = new Message() { Description = "Registro no encontrado." },
 
                 };

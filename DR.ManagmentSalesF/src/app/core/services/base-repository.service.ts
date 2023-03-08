@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ResponseType } from 'src/app/shared/models/response-type.mode';
-import { APIResponse } from 'src/app/shared/models/api-reponse.model';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Environment } from 'src/environments/enviroment-model';
+import { ProblemDetails } from '../../shared/models/problem-details.model';
 
 
 @Injectable({
@@ -26,7 +26,7 @@ export class BaseRepositoryService {
       responseType: response
     }
 
-    return this.http.get<APIResponse>(
+    return this.http.get(
       this.createCompleteRoute(route, this.environment.urlAddress),
       HTTPOptions
 
@@ -102,42 +102,41 @@ export class BaseRepositoryService {
     return `${envAddress}/${route}`;
   }
 
-  
+
   private generateHeaders() {
     const headerConfig = {
       'Content-Type': 'application/json',
     }
     return headerConfig;
   }
-   
+
   private handleError(error: HttpErrorResponse) {
-    
-    let  response : APIResponse= new APIResponse();
-    
+
+    let  response : ProblemDetails= new ProblemDetails();
+
     try {
-      
+
           if (error.status === 0) {
-         
-            response.codigo = 500; 
-            response.status = false;
-            response.message.action   = "Revise su conexión a internet.";
-            response.message.description= "Error al conectar al servidor.";
-            
-            return throwError(response); 
-        
+
+            response.status = 500;
+            response.title  = "Revise su conexión a internet.";
+            response.detail = "Error al conectar al servidor.";
+
+            return throwError(response);
+
           } else {
-           
-            return throwError(error.error); 
-         
+
+            return throwError(error.error);
+
           }
 
     } catch (e) {
-      
-      return throwError(error);  
-      
+
+      return throwError(error);
+
     }
-      
-  
+
+
   }
 
 

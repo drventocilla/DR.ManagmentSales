@@ -8,7 +8,7 @@ namespace DR.ManagmentSales.API.Extensions
         public static void RegisterApplication(this IServiceCollection services)
         {
             services.AddScoped<UsuarioService>();
-            services.AddScoped<StatusCodeBuilder>();
+            services.AddScoped<ResponseFactory>();
             services.AddScoped<TokenService>();
             services.AddScoped<CryptoService>();
             services.AddScoped<AsesorService>();

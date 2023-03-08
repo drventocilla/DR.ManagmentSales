@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { TituloCabeceraService } from 'src/app/core/services/titulo.service';
 import { SharedModalService } from 'src/app/shared/services/shared-modal.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
-import { SubSink } from 'subsink';
 import { Producto } from '../../models/producto.model';
 import { ProductoComponent } from '../producto/producto.component';
 import { FormResult } from '../../../shared/models/form-result';
-import { APIResponse } from '../../../shared/models/api-reponse.model';
 import { ProductoService } from '../../services/producto.service';
+import { ProblemDetails } from 'src/app/shared/models/problem-details.model';
+import { SucessResponse } from 'src/app/shared/models/succes-response.model';
 
 @Component({
   selector: 'app-lista-producto',
@@ -76,18 +76,18 @@ export class ListaProductoComponent implements OnInit {
     this.spinner.showBallAtom("lista-productos");
 
     this.productoService.getAll()
-      .subscribe((response: APIResponse) => {
+      .subscribe((response: SucessResponse) => {
 
         this.listaDeProductos = response.data;
-        
+
         this.spinner.hide("lista-productos");
       }
-        , (error: APIResponse) => {
+        , (error: ProblemDetails) => {
           this.spinner.hide("lista-productos");
           try {
-            this.sharedModalService.mostrarMessageModal(error.message, false);
+            this.sharedModalService.mostrarMessageModal({description: error.title , detail :error.detail }, false);
           } catch (e) {
-            this.sharedModalService.mostrarMessageModal( {description :'Error al conectar con el servidor, intente recargar la página'}, false);
+            this.sharedModalService.mostrarMessageModal({description :'Error al realizar la operación, intente recargar la página'}, false);
           }
 
         });
@@ -99,8 +99,8 @@ export class ListaProductoComponent implements OnInit {
 
     this.spinner.showBallAtom("lista-productos");
     this.productoService.delete(codigo).subscribe((respuesta: any) => {
-    
-    
+
+
       this.spinner.hide("lista-productos");
       this.getAll();
     },
@@ -115,5 +115,5 @@ export class ListaProductoComponent implements OnInit {
       });
 
   }
-  
+
 }

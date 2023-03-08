@@ -1,4 +1,5 @@
 using DR.ManagmentSales.API.Extensions;
+using DR.ManagmentSales.API.Helpers;
 using TarjetaPresentacion.API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,13 +14,19 @@ builder.Services.ConfigureUtils();
 
 builder.Services.RegisterInfraestructure();
 builder.Services.RegisterApplication();
+
+builder.Services.AddSingleton<ResponseFactory>();
+builder.Services.AddSingleton<ErrorResponseFactory>();
+builder.Services.AddSingleton<SuccesResponseFactory>();
+
 builder.Services.AddMvc(
             options => {
                 options.EnableEndpointRouting = false;
-                options.Filters.Add(typeof(JsonExceptionFilter));
+                options.Filters.Add(typeof(ExceptionFilter));
             });
 
-builder.Services.ConfigureJWToken(builder.Configuration);
+
+builder.Services.ConfigureJWToken();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

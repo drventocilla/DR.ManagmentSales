@@ -15,24 +15,24 @@ namespace DR.ManagmentSales.API.Controllers
     public class SessionController : Controller
     {
         private readonly UsuarioService _usuarioService;
-        private readonly StatusCodeBuilder _statusCodeBuilder;
+        private readonly ResponseFactory _responseFactory;
         private readonly TokenService _tokenService;
         private readonly CryptoService _cryptoService;
 
         public SessionController(UsuarioService usuarioService, 
-                                 StatusCodeBuilder statusCodeBuilder,
+                                 ResponseFactory responseFactory,
                                  TokenService tokenService, 
                                  CryptoService cryptoService)
         {
             _usuarioService = usuarioService;
-            _statusCodeBuilder = statusCodeBuilder;
+            _responseFactory = responseFactory;
             _tokenService = tokenService;
             _cryptoService = cryptoService;
         }
 
         [HttpPost("SignIn")]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(SucessResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn(LoginModel model ) {
 
             string passwordDesencriptado = _cryptoService.DesencriptarString(model.Password);
@@ -41,14 +41,14 @@ namespace DR.ManagmentSales.API.Controllers
 
             if (!state.Status)
             {
-                return _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+                return _responseFactory.CreateReponse(state);
 
             }
 
             UserFront userFront = _tokenService.GenerateUserFront(state.Data);
 
 
-            return _statusCodeBuilder.ConstruirAPartirDeEstado(new StateExecution<UserFront> { Status = true , StateType = State.Ok , Data = userFront , MessageState = state.MessageState.Copy()});
+            return _responseFactory.CreateReponse(new StateExecution<UserFront> { Status = true , StateType = State.Ok , Data = userFront , MessageState = state.MessageState.Copy()});
 
 
         }

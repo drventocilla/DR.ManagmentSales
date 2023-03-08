@@ -4,8 +4,7 @@ namespace Core.InfraestructuraADO.V1.UnitOfWork
 {
     public interface IUnityOfWorkRepository
     {
-        public ManejoDeBDRepository ManejoDeBDRepository { get; }
-
+     
 
     }
 }

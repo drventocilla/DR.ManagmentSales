@@ -15,64 +15,66 @@ namespace DR.ManagmentSales.API.Controllers
     public class AsesorController : Controller
     {
         private readonly AsesorService _asesorService;
-        private readonly StatusCodeBuilder _statusCodeBuilder;
+        private readonly ResponseFactory _responseFactory;
 
 
-        public AsesorController(AsesorService asesorService, 
-                                 StatusCodeBuilder statusCodeBuilder)
+        public AsesorController(AsesorService asesorService,
+                                ResponseFactory responseFactory)
         {
             _asesorService = asesorService;
-            _statusCodeBuilder = statusCodeBuilder;
+            _responseFactory = responseFactory;
             
         }
 
         [HttpGet("GetAll")]
-        [ProducesResponseType(typeof(APIResponse<IEnumerable<Asesor>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(SucessResponse<IEnumerable<Asesor>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAll(CancellationToken token) {
 
             
             StateExecution<IEnumerable<Asesor>> state =await _asesorService.GetAsync(token);
 
-            return _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+           return _responseFactory.CreateReponse(state);
 
         }
 
         [HttpGet("Find")]
-        [ProducesResponseType(typeof(APIResponse<Asesor>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(SucessResponse<Asesor>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Find([FromQuery(Name ="id")] string id  , CancellationToken token)
         {
 
 
             StateExecution<Asesor> state = await _asesorService.FindAsync(id , token);
 
-            return _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+            return _responseFactory.CreateReponse(state);
 
         }
 
 
         [HttpPost("Save")]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(SucessResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Save(AsesorModel entidad, CancellationToken token)
         {
             Asesor asesor = new Asesor(entidad.id , entidad.nombres , entidad.celular , entidad.email);
 
             StateExecution state = await _asesorService.UpsertAsync(asesor, token);
-            return _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+
+            return _responseFactory.CreateReponse(state);
 
         }
 
 
         [HttpDelete("Delete")]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(APIResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(SucessResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete([FromQuery(Name = "id")] string id, CancellationToken token)
         {
 
             StateExecution state = await _asesorService.DeleteAsync(id, token);
-            return _statusCodeBuilder.ConstruirAPartirDeEstado(state);
+
+            return _responseFactory.CreateReponse(state);
 
         }
 

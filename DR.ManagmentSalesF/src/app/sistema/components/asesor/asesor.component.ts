@@ -2,8 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { generarCodigo } from 'src/app/core/helpers/other.helpers';
-import { APIResponse } from 'src/app/shared/models/api-reponse.model';
 import { FormResult } from 'src/app/shared/models/form-result';
+import { ProblemDetails } from 'src/app/shared/models/problem-details.model';
+import { SucessResponse } from 'src/app/shared/models/succes-response.model';
 import { SharedModalService } from 'src/app/shared/services/shared-modal.service';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { Asesor } from '../../models/asesor.model';
@@ -34,7 +35,7 @@ export class AsesorComponent implements OnInit {
 
     if (this.data.codigo) {
       this.find(this.data.codigo);
-    
+
     }
   }
 
@@ -70,17 +71,17 @@ export class AsesorComponent implements OnInit {
     let asesor = this.pasarFormularioAEntidad();
     this.spinner.showBallAtom("asesor");
     this.asesorService.save(asesor)
-      .subscribe((respuesta: APIResponse) => {
-        
+      .subscribe((respuesta: SucessResponse) => {
+
         this.estadoDeFormulario.status = true;
         this.spinner.hide("asesor");
-        this.sharedModalService.mostrarMessageModal(respuesta.message, true);
+        this.sharedModalService.mostrarMessageModal( { description:respuesta.title , detail: respuesta.detail }, true);
         this.close();
       }
-        , (error: APIResponse) => {
+        , (error: ProblemDetails) => {
           this.spinner.hide("asesor");
           try {
-            this.sharedModalService.mostrarMessageModal(error.message, false);
+            this.sharedModalService.mostrarMessageModal({description: error.title , detail :error.detail }, false);
           } catch (e) {
             this.sharedModalService.mostrarMessageModal( {description :'Error al conectar con el servidor, intente recargar la página'}, false);
           }
@@ -90,12 +91,12 @@ export class AsesorComponent implements OnInit {
   pasarFormularioAEntidad(): Asesor {
 
     let entidad = new Asesor();
-    
+
     entidad.id = this.codigoActual? this.codigoActual: generarCodigo();
     entidad.nombres = this.nombres.value;
     entidad.celular = this.celular.value;
     entidad.email = this.email.value;
-    
+
     return entidad;
 
   }
@@ -110,7 +111,7 @@ export class AsesorComponent implements OnInit {
   }
 
 
-  
+
   controlesDelFormulario() {
 
     this.formulario = new FormGroup({
@@ -125,16 +126,16 @@ export class AsesorComponent implements OnInit {
 
     this.spinner.showBallAtom("asesor");
     this.asesorService.find(codigo)
-      .subscribe((respuesta: APIResponse) => {
+      .subscribe((respuesta: SucessResponse) => {
         this.spinner.hide("asesor");
         this.pasarEntidadAFormulario(respuesta.data);
       }
-        , (error: APIResponse) => {
+        , (error: ProblemDetails) => {
           this.spinner.hide("asesor");
           try {
-            this.sharedModalService.mostrarMessageModal(error.message, false);
+            this.sharedModalService.mostrarMessageModal({ description:error.title , detail: error.detail }, false);
           } catch (e) {
-            this.sharedModalService.mostrarMessageModal( {description :'Error al conectar con el servidor, intente recargar la página'}, false);
+            this.sharedModalService.mostrarMessageModal( {description :'Error al realizar la operación, intente recargar la página'}, false);
           }
 
         });
@@ -143,7 +144,7 @@ export class AsesorComponent implements OnInit {
   get nombres() {
     return this.formulario.get("nombres");
   }
- 
+
   get celular() {
     return this.formulario.get("celular");
   }

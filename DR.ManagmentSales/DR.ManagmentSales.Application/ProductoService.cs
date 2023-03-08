@@ -67,7 +67,7 @@ namespace DR.ManagmentSales.Application
                 return new StateExecution()
                 {
                     Status = false,
-                    StateType = State.ErrorNotFound,
+                    StateType = State.ErrorNotContent,
                     MessageState = new Message() { Description = "Registro no encontrado." },
 
                 };

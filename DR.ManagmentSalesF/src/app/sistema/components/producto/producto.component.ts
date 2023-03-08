@@ -6,8 +6,9 @@ import { SharedModalService } from 'src/app/shared/services/shared-modal.service
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductoService } from '../../services/producto.service';
-import { APIResponse } from 'src/app/shared/models/api-reponse.model';
 import { generarCodigo } from '../../../core/helpers/other.helpers';
+import { SucessResponse } from 'src/app/shared/models/succes-response.model';
+import { ProblemDetails } from 'src/app/shared/models/problem-details.model';
 
 @Component({
   selector: 'app-producto',
@@ -33,7 +34,7 @@ export class ProductoComponent implements OnInit {
 
     if (this.data.codigo) {
       this.find(this.data.codigo);
-    
+
     }
   }
 
@@ -69,17 +70,17 @@ export class ProductoComponent implements OnInit {
     let producto = this.pasarFormularioAEntidad();
     this.spinner.showBallAtom("producto");
     this.productoService.save(producto)
-      .subscribe((respuesta: APIResponse) => {
-        
+      .subscribe((respuesta: SucessResponse) => {
+
         this.estadoDeFormulario.status = true;
         this.spinner.hide("producto");
-        this.sharedModalService.mostrarMessageModal(respuesta.message, true);
+        this.sharedModalService.mostrarMessageModal({description : respuesta.title , detail : respuesta.detail}, true);
         this.close();
       }
-        , (error: APIResponse) => {
+        , (error: ProblemDetails) => {
           this.spinner.hide("producto");
           try {
-            this.sharedModalService.mostrarMessageModal(error.message, false);
+            this.sharedModalService.mostrarMessageModal({description: error.title , detail :error.detail }, false);
           } catch (e) {
             this.sharedModalService.mostrarMessageModal( {description :'Error al conectar con el servidor, intente recargar la página'}, false);
           }
@@ -89,11 +90,11 @@ export class ProductoComponent implements OnInit {
   pasarFormularioAEntidad(): Producto {
 
     let entidad = new Producto();
-    
+
     entidad.id = this.codigoActual? this.codigoActual: generarCodigo();
     entidad.nombre = this.nombre.value;
     entidad.precio = this.precio.value;
-    
+
     return entidad;
 
   }
@@ -119,16 +120,16 @@ export class ProductoComponent implements OnInit {
 
     this.spinner.showBallAtom("producto");
     this.productoService.find(codigo)
-      .subscribe((respuesta: APIResponse) => {
+      .subscribe((respuesta: SucessResponse) => {
         this.spinner.hide("producto");
         this.pasarEntidadAFormulario(respuesta.data);
       }
-        , (error: APIResponse) => {
+        , (error: ProblemDetails) => {
           this.spinner.hide("producto");
           try {
-            this.sharedModalService.mostrarMessageModal(error.message, false);
+            this.sharedModalService.mostrarMessageModal({description: error.title , detail :error.detail }, false);
           } catch (e) {
-            this.sharedModalService.mostrarMessageModal( {description :'Error al conectar con el servidor, intente recargar la página'}, false);
+            this.sharedModalService.mostrarMessageModal( {description :'Error al realizar la operación, intente recargar la página'}, false);
           }
 
         });
@@ -137,7 +138,7 @@ export class ProductoComponent implements OnInit {
   get nombre() {
     return this.formulario.get("nombre");
   }
- 
+
   get precio() {
     return this.formulario.get("precio");
   }
