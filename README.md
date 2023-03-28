@@ -41,7 +41,7 @@ Funcionalidades requeridas:
     
    •  Creación del TOKEN Claims , Expiracion y Firma
   
-     Se envidencia en el archivo  TokenService.cs
+     Se envidencia en el archivo TokenService.cs
      ![image](https://user-images.githubusercontent.com/66335401/222521574-e23e1274-48a0-4f1e-a433-6b414e3773db.png)
 
 5. Implementar un FrontEnd con angular
@@ -54,6 +54,6 @@ Funcionalidades requeridas:
 
 6. Desplegar el API en Contenedores Docker
 
-   •  En proceso de configuración.
+   •  Terminado
 
 
